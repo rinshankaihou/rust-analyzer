@@ -1,0 +1,127 @@
+
+<style>
+body                { margin: 0; }
+pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+.comment            { color: #7F9F7F; }
+.string             { color: #CC9393; }
+.function           { color: #93E0E3; }
+.parameter          { color: #94BFF3; }
+.builtin            { color: #DD6718; }
+.text               { color: #DCDCCC; }
+.attribute          { color: #94BFF3; }
+.literal            { color: #BFEBBF; }
+.macro              { color: #94BFF3; }
+.variable           { color: #DCDCCC; }
+.variable\.mut     { color: #DCDCCC; text-decoration: underline; }
+
+.keyword            { color: #F0DFAF; }
+.keyword\.unsafe   { color: #DFAF8F; }
+.keyword\.control  { color: #F0DFAF; font-weight: bold; }
+</style>
+<div class="sideBySide">
+<span class="lifetime" variable="vec">
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vec <-
+     |
+     |
+     |
+     ->
+
+
+
+
+
+
+
+</code></pre>
+</span>
+<span class="lifetime" variable="x">
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x <-
+   ->
+
+
+
+
+</code></pre>
+</span>
+<span class="lifetime" variable="y">
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+y <-
+   |
+   |
+   ->
+
+</code></pre>
+<pre><code><span class="comment">// lifetime1.rs</span>
+<span class="comment">// Lifetime</span>
+
+<span class="keyword">fn</span> <span class="function">main</span>() {
+   <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut" data-binding-hash="17622874386840607531" style="color: hsl(261,65%,82%);">s</span>:<span class="text">String</span> = <span class="text">String</span>::<span class="text">from</span>(<span class="string">"hey"</span>);
+   <span class="macro">print</span><span class="macro">!</span>(<span class="string">"{}\n"</span>, s);
+   <span class="variable.mut" data-binding-hash="17622874386840607531" style="color: hsl(261,65%,82%);">s</span> = <span class="string">"hello"</span>.<span class="text">to_string</span>();
+   <span class="keyword">let</span> <span class="variable.mut" data-binding-hash="3959636447297899133" style="color: hsl(303,50%,86%);">y</span> = &<span class="keyword">mut</span> <span class="variable.mut" data-binding-hash="17622874386840607531" style="color: hsl(261,65%,82%);">s</span>;
+   <span class="variable.mut" data-binding-hash="3959636447297899133" style="color: hsl(303,50%,86%);">y</span>.<span class="text">push_str</span>(<span class="string">" hello2"</span>);
+   <span class="macro">print</span><span class="macro">!</span>(<span class="string">"there\n"</span>);
+   <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut" data-binding-hash="17220992762358653836" style="color: hsl(133,88%,44%);">s</span>:<span class="type">i32</span> = <span class="literal">12</span>;
+   <span class="keyword">let</span> <span class="variable.mut" data-binding-hash="16187228420097298557" style="color: hsl(343,92%,72%);">y</span> = &<span class="keyword">mut</span> <span class="variable.mut" data-binding-hash="17220992762358653836" style="color: hsl(133,88%,44%);">s</span>;
+   <span class="macro">print</span><span class="macro">!</span>(<span class="string">"{}"</span>, y);
+   
+   <span class="keyword">let</span> <span class="variable.mut" data-binding-hash="10615183737245124930" style="color: hsl(99,67%,69%);">a</span> = &<span class="keyword">mut</span> <span class="variable.mut" data-binding-hash="17220992762358653836" style="color: hsl(133,88%,44%);">s</span>;
+}</code></pre>
