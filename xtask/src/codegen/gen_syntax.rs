@@ -1,31 +1,32 @@
-//! FIXME: write short doc here
+//! This module generate AST datatype used by rust-analyzer.
+//!
+//! Specifically, it generates the `SyntaxKind` enum and a number of newtype
+//! wrappers around `SyntaxNode` which implement `ra_syntax::AstNode`.
 
-use std::{
-    collections::BTreeMap,
-    fs,
-    io::Write,
-    process::{Command, Stdio},
-};
+use std::{collections::BTreeMap, fs};
 
 use proc_macro2::{Punct, Spacing};
 use quote::{format_ident, quote};
 use ron;
 use serde::Deserialize;
 
-use crate::{project_root, update, Mode, Result, AST, GRAMMAR, SYNTAX_KINDS};
+use crate::{
+    codegen::{self, update, Mode},
+    project_root, Result,
+};
 
-pub fn generate_boilerplate(mode: Mode) -> Result<()> {
-    let grammar = project_root().join(GRAMMAR);
+pub fn generate_syntax(mode: Mode) -> Result<()> {
+    let grammar = project_root().join(codegen::GRAMMAR);
     let grammar: Grammar = {
         let text = fs::read_to_string(grammar)?;
         ron::de::from_str(&text)?
     };
 
-    let syntax_kinds_file = project_root().join(SYNTAX_KINDS);
+    let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
     let syntax_kinds = generate_syntax_kinds(&grammar)?;
     update(syntax_kinds_file.as_path(), &syntax_kinds, mode)?;
 
-    let ast_file = project_root().join(AST);
+    let ast_file = project_root().join(codegen::AST);
     let ast = generate_ast(&grammar)?;
     update(ast_file.as_path(), &ast, mode)?;
 
@@ -157,7 +158,7 @@ fn generate_ast(grammar: &Grammar) -> Result<String> {
         #(#nodes)*
     };
 
-    let pretty = reformat(ast)?;
+    let pretty = codegen::reformat(ast)?;
     Ok(pretty)
 }
 
@@ -270,21 +271,7 @@ fn generate_syntax_kinds(grammar: &Grammar) -> Result<String> {
         }
     };
 
-    reformat(ast)
-}
-
-fn reformat(text: impl std::fmt::Display) -> Result<String> {
-    let mut rustfmt = Command::new("rustfmt")
-        .arg("--config-path")
-        .arg(project_root().join("rustfmt.toml"))
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()?;
-    write!(rustfmt.stdin.take().unwrap(), "{}", text)?;
-    let output = rustfmt.wait_with_output()?;
-    let stdout = String::from_utf8(output.stdout)?;
-    let preamble = "Generated file, do not edit by hand, see `crate/ra_tools/src/codegen`";
-    Ok(format!("//! {}\n\n{}", preamble, stdout))
+    codegen::reformat(ast)
 }
 
 #[derive(Deserialize, Debug)]

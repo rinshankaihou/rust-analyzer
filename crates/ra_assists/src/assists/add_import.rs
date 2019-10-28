@@ -1,18 +1,81 @@
-//! FIXME: write short doc here
-
 use hir::{self, db::HirDatabase};
-use ra_text_edit::TextEditBuilder;
-
-use crate::{
-    assist_ctx::{Assist, AssistCtx},
-    AssistId,
-};
 use ra_syntax::{
     ast::{self, NameOwner},
     AstNode, Direction, SmolStr,
     SyntaxKind::{PATH, PATH_SEGMENT},
     SyntaxNode, TextRange, T,
 };
+use ra_text_edit::TextEditBuilder;
+
+use crate::{
+    assist_ctx::{Assist, AssistCtx},
+    AssistId,
+};
+
+/// This function produces sequence of text edits into edit
+/// to import the target path in the most appropriate scope given
+/// the cursor position
+pub fn auto_import_text_edit(
+    // Ideally the position of the cursor, used to
+    position: &SyntaxNode,
+    // The statement to use as anchor (last resort)
+    anchor: &SyntaxNode,
+    // The path to import as a sequence of strings
+    target: &[SmolStr],
+    edit: &mut TextEditBuilder,
+) {
+    let container = position.ancestors().find_map(|n| {
+        if let Some(module) = ast::Module::cast(n.clone()) {
+            return module.item_list().map(|it| it.syntax().clone());
+        }
+        ast::SourceFile::cast(n).map(|it| it.syntax().clone())
+    });
+
+    if let Some(container) = container {
+        let action = best_action_for_target(container, anchor.clone(), target);
+        make_assist(&action, target, edit);
+    }
+}
+
+// Assist: add_import
+//
+// Adds a use statement for a given fully-qualified path.
+//
+// ```
+// fn process(map: std::collections::<|>HashMap<String, String>) {}
+// ```
+// ->
+// ```
+// use std::collections::HashMap;
+//
+// fn process(map: HashMap<String, String>) {}
+// ```
+pub(crate) fn add_import(ctx: AssistCtx<impl HirDatabase>) -> Option<Assist> {
+    let path: ast::Path = ctx.find_node_at_offset()?;
+    // We don't want to mess with use statements
+    if path.syntax().ancestors().find_map(ast::UseItem::cast).is_some() {
+        return None;
+    }
+
+    let hir_path = hir::Path::from_ast(path.clone())?;
+    let segments = collect_hir_path_segments(&hir_path)?;
+    if segments.len() < 2 {
+        return None;
+    }
+
+    let module = path.syntax().ancestors().find_map(ast::Module::cast);
+    let position = match module.and_then(|it| it.item_list()) {
+        Some(item_list) => item_list.syntax().clone(),
+        None => {
+            let current_file = path.syntax().ancestors().find_map(ast::SourceFile::cast)?;
+            current_file.syntax().clone()
+        }
+    };
+
+    ctx.add_assist(AssistId("add_import"), format!("import {}", fmt_segments(&segments)), |edit| {
+        apply_auto_import(&position, &path, &segments, edit.text_edit_builder());
+    })
+}
 
 fn collect_path_segments_raw(
     segments: &mut Vec<ast::PathSegment>,
@@ -505,7 +568,7 @@ fn apply_auto_import(
     }
 }
 
-pub fn collect_hir_path_segments(path: &hir::Path) -> Option<Vec<SmolStr>> {
+fn collect_hir_path_segments(path: &hir::Path) -> Option<Vec<SmolStr>> {
     let mut ps = Vec::<SmolStr>::with_capacity(10);
     match path.kind {
         hir::PathKind::Abs => ps.push("".into()),
@@ -521,87 +584,16 @@ pub fn collect_hir_path_segments(path: &hir::Path) -> Option<Vec<SmolStr>> {
     Some(ps)
 }
 
-// This function produces sequence of text edits into edit
-// to import the target path in the most appropriate scope given
-// the cursor position
-pub fn auto_import_text_edit(
-    // Ideally the position of the cursor, used to
-    position: &SyntaxNode,
-    // The statement to use as anchor (last resort)
-    anchor: &SyntaxNode,
-    // The path to import as a sequence of strings
-    target: &[SmolStr],
-    edit: &mut TextEditBuilder,
-) {
-    let container = position.ancestors().find_map(|n| {
-        if let Some(module) = ast::Module::cast(n.clone()) {
-            return module.item_list().map(|it| it.syntax().clone());
-        }
-        ast::SourceFile::cast(n).map(|it| it.syntax().clone())
-    });
-
-    if let Some(container) = container {
-        let action = best_action_for_target(container, anchor.clone(), target);
-        make_assist(&action, target, edit);
-    }
-}
-
-pub(crate) fn auto_import(mut ctx: AssistCtx<impl HirDatabase>) -> Option<Assist> {
-    let path: ast::Path = ctx.node_at_offset()?;
-    // We don't want to mess with use statements
-    if path.syntax().ancestors().find_map(ast::UseItem::cast).is_some() {
-        return None;
-    }
-
-    let hir_path = hir::Path::from_ast(path.clone())?;
-    let segments = collect_hir_path_segments(&hir_path)?;
-    if segments.len() < 2 {
-        return None;
-    }
-
-    if let Some(module) = path.syntax().ancestors().find_map(ast::Module::cast) {
-        if let (Some(item_list), Some(name)) = (module.item_list(), module.name()) {
-            ctx.add_action(
-                AssistId("auto_import"),
-                format!("import {} in mod {}", fmt_segments(&segments), name.text()),
-                |edit| {
-                    apply_auto_import(
-                        item_list.syntax(),
-                        &path,
-                        &segments,
-                        edit.text_edit_builder(),
-                    );
-                },
-            );
-        }
-    } else {
-        let current_file = path.syntax().ancestors().find_map(ast::SourceFile::cast)?;
-        ctx.add_action(
-            AssistId("auto_import"),
-            format!("import {} in the current file", fmt_segments(&segments)),
-            |edit| {
-                apply_auto_import(
-                    current_file.syntax(),
-                    &path,
-                    &segments,
-                    edit.text_edit_builder(),
-                );
-            },
-        );
-    }
-
-    ctx.build()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::helpers::{check_assist, check_assist_not_applicable};
+
+    use super::*;
 
     #[test]
     fn test_auto_import_add_use_no_anchor() {
         check_assist(
-            auto_import,
+            add_import,
             "
 std::fmt::Debug<|>
     ",
@@ -615,7 +607,7 @@ Debug<|>
     #[test]
     fn test_auto_import_add_use_no_anchor_with_item_below() {
         check_assist(
-            auto_import,
+            add_import,
             "
 std::fmt::Debug<|>
 
@@ -636,7 +628,7 @@ fn main() {
     #[test]
     fn test_auto_import_add_use_no_anchor_with_item_above() {
         check_assist(
-            auto_import,
+            add_import,
             "
 fn main() {
 }
@@ -657,7 +649,7 @@ Debug<|>
     #[test]
     fn test_auto_import_add_use_no_anchor_2seg() {
         check_assist(
-            auto_import,
+            add_import,
             "
 std::fmt<|>::Debug
     ",
@@ -672,7 +664,7 @@ fmt<|>::Debug
     #[test]
     fn test_auto_import_add_use() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use stdx;
 
@@ -692,7 +684,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_file_use_other_anchor() {
         check_assist(
-            auto_import,
+            add_import,
             "
 impl std::fmt::Debug<|> for Foo {
 }
@@ -709,7 +701,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_add_use_other_anchor_indent() {
         check_assist(
-            auto_import,
+            add_import,
             "
     impl std::fmt::Debug<|> for Foo {
     }
@@ -726,7 +718,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_split_different() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt;
 
@@ -745,7 +737,7 @@ impl io<|> for Foo {
     #[test]
     fn test_auto_import_split_self_for_use() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt;
 
@@ -764,7 +756,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_split_self_for_target() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::Debug;
 
@@ -783,7 +775,7 @@ impl fmt<|> for Foo {
     #[test]
     fn test_auto_import_add_to_nested_self_nested() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::{Debug, nested::{Display}};
 
@@ -802,7 +794,7 @@ impl nested<|> for Foo {
     #[test]
     fn test_auto_import_add_to_nested_self_already_included() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::{Debug, nested::{self, Display}};
 
@@ -821,7 +813,7 @@ impl nested<|> for Foo {
     #[test]
     fn test_auto_import_add_to_nested_nested() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::{Debug, nested::{Display}};
 
@@ -840,7 +832,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_split_common_target_longer() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::Debug;
 
@@ -859,7 +851,7 @@ impl Display<|> for Foo {
     #[test]
     fn test_auto_import_split_common_use_longer() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt::nested::Debug;
 
@@ -878,7 +870,7 @@ impl Display<|> for Foo {
     #[test]
     fn test_auto_import_alias() {
         check_assist(
-            auto_import,
+            add_import,
             "
 use std::fmt as foo;
 
@@ -897,7 +889,7 @@ impl Debug<|> for Foo {
     #[test]
     fn test_auto_import_not_applicable_one_segment() {
         check_assist_not_applicable(
-            auto_import,
+            add_import,
             "
 impl foo<|> for Foo {
 }
@@ -908,7 +900,7 @@ impl foo<|> for Foo {
     #[test]
     fn test_auto_import_not_applicable_in_use() {
         check_assist_not_applicable(
-            auto_import,
+            add_import,
             "
 use std::fmt<|>;
 ",
@@ -918,7 +910,7 @@ use std::fmt<|>;
     #[test]
     fn test_auto_import_add_use_no_anchor_in_mod_mod() {
         check_assist(
-            auto_import,
+            add_import,
             "
 mod foo {
     mod bar {

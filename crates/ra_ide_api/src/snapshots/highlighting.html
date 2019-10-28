@@ -2,6 +2,10 @@
 <style>
 body                { margin: 0; }
 pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+background    { color: #3F3F3F; }
+
+.sideBySide         { display: flex; }
+.rustCode           { flex-grow: 1; }
 
 .comment            { color: #7F9F7F; }
 .string             { color: #CC9393; }
@@ -19,6 +23,15 @@ pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padd
 .keyword\.unsafe   { color: #DFAF8F; }
 .keyword\.control  { color: #F0DFAF; font-weight: bold; }
 </style>
+<div class="sideBySide">
+<div class="lifetime">
+<pre><code>
+|
+|
+|
+</code></pre>
+</div>
+<div class="rustCode">
 <pre><code><span class="attribute">#</span><span class="attribute">[</span><span class="attribute">derive</span><span class="attribute">(</span><span class="attribute">Clone</span><span class="attribute">,</span><span class="attribute"> </span><span class="attribute">Debug</span><span class="attribute">)</span><span class="attribute">]</span>
 <span class="keyword">struct</span> <span class="type">Foo</span> {
     <span class="keyword">pub</span> <span class="field">x</span>: <span class="type">i32</span>,
@@ -46,3 +59,5 @@ pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padd
 
     <span class="variable.mut">y</span>;
 }</code></pre>
+</div>
+</div>

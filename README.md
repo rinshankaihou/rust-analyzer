@@ -33,10 +33,10 @@ To quickly install rust-analyzer with VS Code extension with standard setup
 $ git clone https://github.com/rust-analyzer/rust-analyzer && cd rust-analyzer
 
 # install both the language server and VS Code extension
-$ cargo install-ra
+$ cargo xtask install
 
 # alternatively, install only the server. Binary name is `ra_lsp_server`.
-$ cargo install-ra --server
+$ cargo xtask install --server
 ```
 
 For non-standard setup of VS Code and other editors, see [./docs/user](./docs/user).
@@ -59,7 +59,7 @@ https://rust-lang.zulipchat.com/#narrow/stream/185405-t-compiler.2Frls-2.2E0
 ## Quick Links
 
 * Work List: https://paper.dropbox.com/doc/RLS-2.0-work-list--AZ3BgHKKCtqszbsi3gi6sjchAQ-42vbnxzuKq2lKwW0mkn8Y
-* API docs: https://rust-analyzer.github.io/rust-analyzer/api-docs/ra_ide_api/
+* API docs: https://rust-analyzer.github.io/rust-analyzer/ra_ide_api/
 * CI: https://travis-ci.org/rust-analyzer/rust-analyzer
 
 ## License

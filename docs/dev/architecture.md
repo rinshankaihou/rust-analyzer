@@ -45,21 +45,15 @@ can be quickly updated for small modifications.
 Some of the components of this repository are generated through automatic
 processes. These are outlined below:
 
-- `gen-syntax`: The kinds of tokens that are reused in several places, so a generator
-  is used. We use tera templates to generate the files listed below, based on
+- `cargo xtask codegen`: The kinds of tokens that are reused in several places, so a generator
+  is used. We use `quote!` macro to generate the files listed below, based on
   the grammar described in [grammar.ron]:
-  - [ast/generated.rs][ast generated] in `ra_syntax` based on
-    [ast/generated.tera.rs][ast source]
-  - [syntax_kind/generated.rs][syntax_kind generated] in `ra_syntax` based on
-    [syntax_kind/generated.tera.rs][syntax_kind source]
+  - [ast/generated.rs][ast generated]
+  - [syntax_kind/generated.rs][syntax_kind generated]
 
-[tera]: https://tera.netlify.com/
 [grammar.ron]: ../../crates/ra_syntax/src/grammar.ron
 [ast generated]: ../../crates/ra_syntax/src/ast/generated.rs
-[ast source]: ../../crates/ra_syntax/src/ast/generated.rs.tera
 [syntax_kind generated]: ../../crates/ra_parser/src/syntax_kind/generated.rs
-[syntax_kind source]: ../../crates/ra_parser/src/syntax_kind/generated.rs.tera
-
 
 ## Code Walk-Through
 
@@ -77,14 +71,14 @@ Rust syntax tree structure and parser. See
   This is the thing that turns a flat list of events into a tree (see `EventProcessor`)
 - `ast` provides a type safe API on top of the raw `rowan` tree.
 - `grammar.ron` RON description of the grammar, which is used to
-  generate `syntax_kinds` and `ast` modules, using `cargo gen-syntax` command.
+  generate `syntax_kinds` and `ast` modules, using `cargo xtask codegen` command.
 - `algo`: generic tree algorithms, including `walk` for O(1) stack
   space tree traversal (this is cool).
 
 Tests for ra_syntax are mostly data-driven: `test_data/parser` contains subdirectories with a bunch of `.rs`
 (test vectors) and `.txt` files with corresponding syntax trees. During testing, we check
 `.rs` against `.txt`. If the `.txt` file is missing, it is created (this is how you update
-tests). Additionally, running `cargo gen-tests` will walk the grammar module and collect
+tests). Additionally, running `cargo xtask codegen` will walk the grammar module and collect
 all `// test test_name` comments into files inside `test_data/parser/inline` directory.
 
 See [#93](https://github.com/rust-analyzer/rust-analyzer/pull/93) for an example PR which
