@@ -60,7 +60,7 @@ FLAGS:
 pub const SYMBOLS_HELP: &str = "ra-cli-symbols
 
 USAGE:
-    ra_cli highlight [FLAGS]
+    ra_cli symbols [FLAGS]
 
 FLAGS:
     -h, --help    Prints help inforamtion";
