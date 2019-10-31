@@ -1,0 +1,198 @@
+
+<style>
+body                { margin: 0; }
+pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+.comment            { color: #7F9F7F; }
+.string             { color: #CC9393; }
+.function           { color: #93E0E3; }
+.parameter          { color: #94BFF3; }
+.builtin            { color: #DD6718; }
+.text               { color: #DCDCCC; }
+.attribute          { color: #94BFF3; }
+.literal            { color: #BFEBBF; }
+.macro              { color: #94BFF3; }
+.variable           { color: #DCDCCC; }
+.variable\.mut     { color: #DCDCCC; text-decoration: underline; }
+
+.keyword            { color: #F0DFAF; }
+.keyword\.unsafe   { color: #DFAF8F; }
+.keyword\.control  { color: #F0DFAF; font-weight: bold; }
+</style>
+<pre><code><span class="comment">//! FIXME: write short doc here</span>
+
+<span class="keyword">mod</span> <span class="function">analysis_stats</span>;
+<span class="keyword">mod</span> <span class="function">analysis_bench</span>;
+<span class="keyword">mod</span> <span class="function">help</span>;
+
+<span class="keyword">use</span> <span class="text">std</span>::{<span class="text">error</span>::<span class="text">Error</span>, <span class="text">fmt</span>::<span class="text">Write</span>, <span class="text">io</span>::<span class="text">Read</span>};
+
+<span class="keyword">use</span> <span class="text">flexi_logger</span>::<span class="text">Logger</span>;
+<span class="keyword">use</span> <span class="text">pico_args</span>::<span class="text">Arguments</span>;
+<span class="keyword">use</span> <span class="text">ra_ide_api</span>::{<span class="text">file_structure</span>, <span class="text">Analysis</span>};
+<span class="keyword">use</span> <span class="text">ra_prof</span>::<span class="text">profile</span>;
+<span class="keyword">use</span> <span class="text">ra_syntax</span>::{<span class="text">AstNode</span>, <span class="text">SourceFile</span>};
+
+<span class="keyword">type</span> <span class="type">Result</span>&lt;<span class="type">T</span>&gt; = <span class="text">std</span>::<span class="text">result</span>::<span class="text">Result</span>&lt;<span class="text">T</span>, <span class="text">Box</span>&lt;<span class="keyword">dyn</span> <span class="text">Error</span> + <span class="text">Send</span> + <span class="text">Sync</span>&gt;&gt;;
+
+<span class="attribute">#</span><span class="attribute">[</span><span class="attribute">derive</span><span class="attribute">(</span><span class="attribute">Clone</span><span class="attribute">,</span><span class="attribute"> </span><span class="attribute">Copy</span><span class="attribute">)</span><span class="attribute">]</span>
+<span class="keyword">pub</span> <span class="keyword">enum</span> <span class="type">Verbosity</span> {
+    <span class="function">Verbose</span>,
+    <span class="function">Normal</span>,
+    <span class="function">Quiet</span>,
+}
+
+<span class="keyword">impl</span> <span class="type">Verbosity</span> {
+    <span class="keyword">fn</span> <span class="function">is_verbose</span>(&<span class="keyword">self</span>) -&gt; <span class="type">bool</span> {
+        <span class="keyword.control">match</span> <span class="keyword">self</span> {
+            <span class="type">Verbosity</span>::<span class="constant">Verbose</span> =&gt; <span class="keyword">true</span>,
+            _ =&gt; <span class="keyword">false</span>,
+        }
+    }
+}
+
+<span class="keyword">fn</span> <span class="function">main</span>() -&gt; <span class="type">Result</span>&lt;()&gt; {
+    <span class="text">Logger</span>::<span class="text">with_env_or_str</span>(<span class="string">"error"</span>).<span class="text">start</span>()?;
+
+    <span class="keyword">let</span> <span class="variable">subcommand</span> = <span class="keyword.control">match</span> <span class="text">std</span>::<span class="text">env</span>::<span class="text">args_os</span>().<span class="text">nth</span>(<span class="literal">1</span>) {
+        <span class="variable">None</span> =&gt; {
+            <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::GLOBAL_HELP);
+            <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+        }
+        <span class="text">Some</span>(<span class="variable">s</span>) =&gt; <span class="variable">s</span>,
+    };
+    <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut">matches</span> = <span class="text">Arguments</span>::<span class="text">from_vec</span>(<span class="text">std</span>::<span class="text">env</span>::<span class="text">args_os</span>().<span class="text">skip</span>(<span class="literal">2</span>).<span class="text">collect</span>());
+
+    <span class="keyword.control">match</span> &*<span class="variable">subcommand</span>.<span class="text">to_string_lossy</span>() {
+        <span class="string">"parse"</span> =&gt; {
+            <span class="keyword.control">if</span> <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-h"</span>, <span class="string">"--help"</span>]) {
+                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::PARSE_HELP);
+                <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+            }
+            <span class="keyword">let</span> <span class="variable">no_dump</span> = <span class="variable.mut">matches</span>.<span class="text">contains</span>(<span class="string">"--no-dump"</span>);
+            <span class="variable.mut">matches</span>.<span class="text">finish</span>().<span class="text">or_else</span>(<span class="function">handle_extra_flags</span>)?;
+
+            <span class="keyword">let</span> <span class="variable">_p</span> = <span class="text">profile</span>(<span class="string">"parsing"</span>);
+            <span class="keyword">let</span> <span class="variable">file</span> = <span class="function">file</span>()?;
+            <span class="keyword.control">if</span> !<span class="variable">no_dump</span> {
+                <span class="macro">println</span><span class="macro">!</span>(<span class="string">"{:#?}"</span>, file.syntax());
+            }
+            <span class="text">std</span>::<span class="text">mem</span>::<span class="text">forget</span>(<span class="variable">file</span>);
+        }
+        <span class="string">"symbols"</span> =&gt; {
+            <span class="keyword.control">if</span> <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-h"</span>, <span class="string">"--help"</span>]) {
+                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::SYMBOLS_HELP);
+                <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+            }
+            <span class="variable.mut">matches</span>.<span class="text">finish</span>().<span class="text">or_else</span>(<span class="function">handle_extra_flags</span>)?;
+            <span class="keyword">let</span> <span class="variable">file</span> = <span class="function">file</span>()?;
+            <span class="keyword.control">for</span> <span class="variable">s</span> <span class="keyword">in</span> <span class="text">file_structure</span>(&<span class="variable">file</span>) {
+                <span class="macro">println</span><span class="macro">!</span>(<span class="string">"{:?}"</span>, s);
+            }
+        }
+        <span class="string">"highlight"</span> =&gt; {
+            <span class="keyword.control">if</span> <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-h"</span>, <span class="string">"--help"</span>]) {
+                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::HIGHLIGHT_HELP);
+                <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+            }
+            <span class="keyword">let</span> <span class="variable">rainbow_opt</span> = <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-r"</span>, <span class="string">"--rainbow"</span>]);
+            <span class="variable.mut">matches</span>.<span class="text">finish</span>().<span class="text">or_else</span>(<span class="function">handle_extra_flags</span>)?;
+            <span class="keyword">let</span> (<span class="variable">analysis</span>, <span class="variable">file_id</span>) = <span class="text">Analysis</span>::<span class="text">from_single_file</span>(<span class="function">read_stdin</span>()?);
+            <span class="keyword">let</span> <span class="variable">html</span> = <span class="variable">analysis</span>.<span class="text">highlight_as_html</span>(<span class="variable">file_id</span>, <span class="variable">rainbow_opt</span>).<span class="text">unwrap</span>();
+            <span class="macro">println</span><span class="macro">!</span>(<span class="string">"{}"</span>, html);
+        }
+        <span class="string">"analysis-stats"</span> =&gt; {
+            <span class="keyword.control">if</span> <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-h"</span>, <span class="string">"--help"</span>]) {
+                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::ANALYSIS_STATS_HELP);
+                <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+            }
+            <span class="keyword">let</span> <span class="variable">verbosity</span> = <span class="keyword.control">match</span> (
+                <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-v"</span>, <span class="string">"--verbose"</span>]),
+                <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-q"</span>, <span class="string">"--quiet"</span>]),
+            ) {
+                (<span class="keyword">false</span>, <span class="keyword">false</span>) =&gt; <span class="type">Verbosity</span>::<span class="constant">Normal</span>,
+                (<span class="keyword">false</span>, <span class="keyword">true</span>) =&gt; <span class="type">Verbosity</span>::<span class="constant">Quiet</span>,
+                (<span class="keyword">true</span>, <span class="keyword">false</span>) =&gt; <span class="type">Verbosity</span>::<span class="constant">Verbose</span>,
+                (<span class="keyword">true</span>, <span class="keyword">true</span>) =&gt; <span class="text">Err</span>(<span class="string">"Invalid flags: -q conflicts with -v"</span>)?,
+            };
+            <span class="keyword">let</span> <span class="variable">memory_usage</span> = <span class="variable.mut">matches</span>.<span class="text">contains</span>(<span class="string">"--memory-usage"</span>);
+            <span class="keyword">let</span> <span class="variable">only</span>: <span class="text">Option</span>&lt;<span class="text">String</span>&gt; = <span class="variable.mut">matches</span>.<span class="text">opt_value_from_str</span>([<span class="string">"-o"</span>, <span class="string">"--only"</span>])?;
+            <span class="keyword">let</span> <span class="variable">path</span> = {
+                <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut">trailing</span> = <span class="variable.mut">matches</span>.<span class="text">free</span>()?;
+                <span class="keyword.control">if</span> <span class="variable.mut">trailing</span>.<span class="text">len</span>() != <span class="literal">1</span> {
+                    <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::ANALYSIS_STATS_HELP);
+                    <span class="text">Err</span>(<span class="string">"Invalid flags"</span>)?;
+                }
+                <span class="variable.mut">trailing</span>.<span class="text">pop</span>().<span class="text">unwrap</span>()
+            };
+            <span class="text">analysis_stats</span>::<span class="text">run</span>(
+                <span class="variable">verbosity</span>,
+                <span class="variable">memory_usage</span>,
+                <span class="variable">path</span>.<span class="text">as_ref</span>(),
+                <span class="variable">only</span>.<span class="text">as_ref</span>().<span class="text">map</span>(<span class="text">String</span>::<span class="text">as_ref</span>),
+            )?;
+        }
+        <span class="string">"analysis-bench"</span> =&gt; {
+            <span class="keyword.control">if</span> <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-h"</span>, <span class="string">"--help"</span>]) {
+                <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::ANALYSIS_BENCH_HELP);
+                <span class="keyword.control">return</span> <span class="text">Ok</span>(());
+            }
+            <span class="keyword">let</span> <span class="variable">verbose</span> = <span class="variable.mut">matches</span>.<span class="text">contains</span>([<span class="string">"-v"</span>, <span class="string">"--verbose"</span>]);
+            <span class="keyword">let</span> <span class="variable">path</span>: <span class="text">String</span> = <span class="variable.mut">matches</span>.<span class="text">opt_value_from_str</span>(<span class="string">"--path"</span>)?.<span class="text">unwrap_or_default</span>();
+            <span class="keyword">let</span> <span class="variable">highlight_path</span> = <span class="variable.mut">matches</span>.<span class="text">opt_value_from_str</span>(<span class="string">"--highlight"</span>)?;
+            <span class="keyword">let</span> <span class="variable">complete_path</span> = <span class="variable.mut">matches</span>.<span class="text">opt_value_from_str</span>(<span class="string">"--complete"</span>)?;
+            <span class="keyword.control">if</span> <span class="variable">highlight_path</span>.<span class="text">is_some</span>() && <span class="variable">complete_path</span>.<span class="text">is_some</span>() {
+                <span class="macro">panic</span><span class="macro">!</span>(<span class="string">"either --highlight or --complete must be set, not both"</span>)
+            }
+            <span class="keyword">let</span> <span class="variable">op</span> = <span class="keyword.control">if</span> <span class="keyword">let</span> <span class="text">Some</span>(<span class="variable">path</span>) = <span class="variable">highlight_path</span> {
+                <span class="keyword">let</span> <span class="variable">path</span>: <span class="text">String</span> = <span class="variable">path</span>;
+                <span class="text">analysis_bench</span>::<span class="text">Op</span>::<span class="text">Highlight</span> { <span class="text">path</span>: <span class="variable">path</span>.<span class="text">into</span>() }
+            } <span class="keyword.control">else</span> <span class="keyword.control">if</span> <span class="keyword">let</span> <span class="text">Some</span>(<span class="variable">path_line_col</span>) = <span class="variable">complete_path</span> {
+                <span class="keyword">let</span> <span class="variable">path_line_col</span>: <span class="text">String</span> = <span class="variable">path_line_col</span>;
+                <span class="keyword">let</span> (<span class="variable">path_line</span>, <span class="variable">column</span>) = <span class="function">rsplit_at_char</span>(<span class="variable">path_line_col</span>.<span class="text">as_str</span>(), <span class="literal">':'</span>)?;
+                <span class="keyword">let</span> (<span class="variable">path</span>, <span class="variable">line</span>) = <span class="function">rsplit_at_char</span>(<span class="variable">path_line</span>, <span class="literal">':'</span>)?;
+                <span class="text">analysis_bench</span>::<span class="text">Op</span>::<span class="text">Complete</span> {
+                    <span class="text">path</span>: <span class="variable">path</span>.<span class="text">into</span>(),
+                    <span class="text">line</span>: <span class="variable">line</span>.<span class="text">parse</span>()?,
+                    <span class="text">column</span>: <span class="variable">column</span>.<span class="text">parse</span>()?,
+                }
+            } <span class="keyword.control">else</span> {
+                <span class="macro">panic</span><span class="macro">!</span>(<span class="string">"either --highlight or --complete must be set"</span>)
+            };
+            <span class="variable.mut">matches</span>.<span class="text">finish</span>().<span class="text">or_else</span>(<span class="function">handle_extra_flags</span>)?;
+            <span class="text">analysis_bench</span>::<span class="text">run</span>(<span class="variable">verbose</span>, <span class="variable">path</span>.<span class="text">as_ref</span>(), <span class="variable">op</span>)?;
+        }
+        _ =&gt; <span class="macro">eprintln</span><span class="macro">!</span>(<span class="string">"{}"</span>, help::GLOBAL_HELP),
+    }
+    <span class="text">Ok</span>(())
+}
+
+<span class="keyword">fn</span> <span class="function">handle_extra_flags</span>(<span class="variable">e</span>: <span class="text">pico_args</span>::<span class="text">Error</span>) -&gt; <span class="type">Result</span>&lt;()&gt; {
+    <span class="keyword.control">if</span> <span class="keyword">let</span> <span class="text">pico_args</span>::<span class="text">Error</span>::<span class="text">UnusedArgsLeft</span>(<span class="variable">flags</span>) = <span class="variable">e</span> {
+        <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut">invalid_flags</span> = <span class="text">String</span>::<span class="text">new</span>();
+        <span class="keyword.control">for</span> <span class="variable">flag</span> <span class="keyword">in</span> <span class="variable">flags</span> {
+            <span class="macro">write</span><span class="macro">!</span>(&<span class="keyword">mut</span> invalid_flags, <span class="string">"{}, "</span>, flag)?;
+        }
+        <span class="keyword">let</span> (<span class="variable">invalid_flags</span>, _) = <span class="variable.mut">invalid_flags</span>.<span class="text">split_at</span>(<span class="variable.mut">invalid_flags</span>.<span class="text">len</span>() - <span class="literal">2</span>);
+        <span class="text">Err</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">"Invalid flags: {}"</span>, invalid_flags).<span class="text">into</span>())
+    } <span class="keyword.control">else</span> {
+        <span class="text">Err</span>(<span class="variable">e</span>.<span class="text">to_string</span>().<span class="text">into</span>())
+    }
+}
+
+<span class="keyword">fn</span> <span class="function">file</span>() -&gt; <span class="type">Result</span>&lt;<span class="text">SourceFile</span>&gt; {
+    <span class="keyword">let</span> <span class="variable">text</span> = <span class="function">read_stdin</span>()?;
+    <span class="text">Ok</span>(<span class="text">SourceFile</span>::<span class="text">parse</span>(&<span class="variable">text</span>).<span class="text">tree</span>())
+}
+
+<span class="keyword">fn</span> <span class="function">read_stdin</span>() -&gt; <span class="type">Result</span>&lt;<span class="text">String</span>&gt; {
+    <span class="keyword">let</span> <span class="keyword">mut</span> <span class="variable.mut">buff</span> = <span class="text">String</span>::<span class="text">new</span>();
+    <span class="text">std</span>::<span class="text">io</span>::<span class="text">stdin</span>().<span class="text">read_to_string</span>(&<span class="keyword">mut</span> <span class="variable.mut">buff</span>)?;
+    <span class="text">Ok</span>(<span class="variable.mut">buff</span>)
+}
+
+<span class="keyword">fn</span> <span class="function">rsplit_at_char</span>(<span class="variable">s</span>: &<span class="type">str</span>, <span class="variable">c</span>: <span class="type">char</span>) -&gt; <span class="type">Result</span>&lt;(&<span class="type">str</span>, &<span class="type">str</span>)&gt; {
+    <span class="keyword">let</span> <span class="variable">idx</span> = <span class="variable">s</span>.<span class="text">rfind</span>(<span class="literal">':'</span>).<span class="text">ok_or_else</span>(|| <span class="macro">format</span><span class="macro">!</span>(<span class="string">"no `{}` in {}"</span>, c, s))?;
+    <span class="text">Ok</span>((&<span class="variable">s</span>[..<span class="text">idx</span>], &<span class="variable">s</span>[<span class="variable">idx</span> + <span class="literal">1</span>..]))
+}
+</code></pre>

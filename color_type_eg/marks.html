@@ -1,0 +1,35 @@
+
+<style>
+body                { margin: 0; }
+pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+.comment            { color: #7F9F7F; }
+.string             { color: #CC9393; }
+.function           { color: #93E0E3; }
+.parameter          { color: #94BFF3; }
+.builtin            { color: #DD6718; }
+.text               { color: #DCDCCC; }
+.attribute          { color: #94BFF3; }
+.literal            { color: #BFEBBF; }
+.macro              { color: #94BFF3; }
+.variable           { color: #DCDCCC; }
+.variable\.mut     { color: #DCDCCC; text-decoration: underline; }
+
+.keyword            { color: #F0DFAF; }
+.keyword\.unsafe   { color: #DFAF8F; }
+.keyword\.control  { color: #F0DFAF; font-weight: bold; }
+</style>
+<pre><code><span class="comment">//! See test_utils/src/marks.rs</span>
+
+<span class="text">test_utils</span>::<span class="macro">marks</span><span class="macro">!</span>(
+    inserts_angle_brackets_for_generics
+    inserts_parens_for_function_calls
+    goto_definition_works_for_macros
+    goto_definition_works_for_methods
+    goto_definition_works_for_fields
+    goto_definition_works_for_record_fields
+    call_info_bad_offset
+    dont_complete_current_use
+    dont_complete_primitive_in_use
+);
+</code></pre>

@@ -1,4 +1,34 @@
 [alias]
-xtask = "run --package xtask --bin xtask --"
+# Automatically generates the ast and syntax kinds files
+gen-syntax   = "run --package ra_tools --bin ra_tools -- gen-syntax"
 
-install-ra = "run --package xtask --bin xtask -- install" # for backwards compat
+# Extracts the tests from
+gen-tests    = "run --package ra_tools --bin ra_tools -- gen-tests"
+
+build-website = "run --package website-gen"
+
+# Installs the visual studio code extension
+install-ra   = "run --package ra_tools --bin ra_tools -- install-ra"
+install-code = "run --package ra_tools --bin ra_tools -- install-ra" # just an alias
+
+# Formats the full repository or installs the git hook to do it automatically.
+format       = "run --package ra_tools --bin ra_tools -- format"
+format-hook  = "run --package ra_tools --bin ra_tools -- format-hook"
+
+# Run clippy
+lint         = "run --package ra_tools --bin ra_tools -- lint"
+
+# Runs the fuzzing test suite (currently only parser)
+fuzz-tests   = "run --package ra_tools --bin ra_tools -- fuzz-tests"
+
+# Parse a file. This should be piped the file contents
+parse        = "run --package ra_cli -- parse"
+
+# Parse a file. This should be piped the file contents
+highlight    = "run --package ra_cli -- highlight"
+rainbow      = "run --package ra_cli -- highlight -r"
+symbols      = "run --package ra_cli -- symbols -h"
+# cargo run --package ra_cli -- symbols < ./crates/ra_cli/src/main.rs > color_type_eg/cli_symbols_eg
+# cargo parse  < color_type_eg/snippet.rs > color_type_eg/snippet.parse
+canta        = "run --package ra_cli -- canta"
+# cargo canta -p1 25 -p2 40 < color_type_eg/snippet.rs > color_type_eg/snippet.temp

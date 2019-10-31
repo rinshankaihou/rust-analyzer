@@ -270,6 +270,7 @@ pub(crate) fn highlight_as_html(db: &RootDatabase, file_id: FileId, rainbow: boo
     }
     buf.push_str("</code></pre>");
     buf
+
 }
 
 //FIXME: like, real html escaping

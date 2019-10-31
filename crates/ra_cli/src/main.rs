@@ -10,8 +10,7 @@ use flexi_logger::Logger;
 use pico_args::Arguments;
 use ra_ide_api::{file_structure, Analysis};
 use ra_prof::profile;
-use ra_syntax::{AstNode, SourceFile};
-
+use ra_syntax::{AstNode, SourceFile, TextRange, TextUnit};
 type Result<T> = std::result::Result<T, Box<dyn Error + Send + Sync>>;
 
 #[derive(Clone, Copy)]
@@ -79,6 +78,33 @@ fn main() -> Result<()> {
             let (analysis, file_id) = Analysis::from_single_file(read_stdin()?);
             let html = analysis.highlight_as_html(file_id, rainbow_opt).unwrap();
             println!("{}", html);
+        }
+        "canta" => {
+            if matches.contains(["-h", "--help"]) {
+                eprintln!("No one is gonna help you.");
+                return Ok(());
+            }
+            
+            let pos1_str: String = matches.opt_value_from_str(["-p1", "--pos1"])?.unwrap_or_default();
+            let pos2_str: String = matches.opt_value_from_str(["-p2", "--pos2"])?.unwrap_or_default();
+            if pos1_str == String::new() || pos2_str == String::new() {
+                eprintln!("need 2 args");
+                return Ok(());
+            }
+            let pos1 : u32 = pos1_str.parse::<u32>().unwrap();
+            let pos2 : u32 = pos2_str.parse::<u32>().unwrap();
+            println!("{} {}", pos1, pos2);
+            matches.finish().or_else(handle_extra_flags)?;
+            let range = TextRange::from_to(TextUnit::from(pos1), TextUnit::from(pos2));
+            //let (analysis, file_id) = Analysis::from_single_file(read_stdin()?);
+            let (analysis, file_id) = Analysis::from_single_file(read_stdin()?);
+            let type_def = analysis.type_of(
+                ra_db::FileRange {
+                    file_id,
+                    range
+                }).unwrap();
+            println!("{}", type_def.unwrap());
+
         }
         "analysis-stats" => {
             if matches.contains(["-h", "--help"]) {

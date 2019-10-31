@@ -1,0 +1,29 @@
+SOURCE_FILE@[0; 44)
+  FN_DEF@[0; 44)
+    FN_KW@[0; 2) "fn"
+    WHITESPACE@[2; 3) " "
+    NAME@[3; 7)
+      IDENT@[3; 7) "main"
+    PARAM_LIST@[7; 9)
+      L_PAREN@[7; 8) "("
+      R_PAREN@[8; 9) ")"
+    WHITESPACE@[9; 10) " "
+    BLOCK_EXPR@[10; 44)
+      BLOCK@[10; 44)
+        L_CURLY@[10; 11) "{"
+        WHITESPACE@[11; 16) "\n    "
+        EXPR_STMT@[16; 42)
+          MACRO_CALL@[16; 41)
+            PATH@[16; 23)
+              PATH_SEGMENT@[16; 23)
+                NAME_REF@[16; 23)
+                  IDENT@[16; 23) "println"
+            EXCL@[23; 24) "!"
+            TOKEN_TREE@[24; 41)
+              L_PAREN@[24; 25) "("
+              STRING@[25; 40) "\"Hello, world!\""
+              R_PAREN@[40; 41) ")"
+          SEMI@[41; 42) ";"
+        WHITESPACE@[42; 43) "\n"
+        R_CURLY@[43; 44) "}"
+
