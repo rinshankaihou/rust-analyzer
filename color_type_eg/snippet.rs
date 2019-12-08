@@ -1,5 +1,6 @@
-pub struct MilkTea {
-    //pub tea : str,
+use std::string::String;
+pub struct MilkTea<'a> {
+    pub tea 'a : &str,
     pub sugar: u32,
     pub ice: u32,
 }
@@ -22,10 +23,10 @@ impl Foo for Bar {
     }
 }
 
-fn eg1() -> str {
+fn eg1() -> String {
     let a = Bar::foo();
     let b =  <Bar as Foo>::foo();
-    "hohoho"
+    "hohoho".to_string()
 }
 
 fn main() {
@@ -34,26 +35,20 @@ fn main() {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }

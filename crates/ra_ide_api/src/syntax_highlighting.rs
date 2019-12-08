@@ -144,33 +144,30 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             binding_hash = Some(calc_binding_hash_type(file_id, &ptr.ty(db)));
                             let this_node = node.as_node().cloned().unwrap();
                             let node_text_range = this_node.text_range();
-                            let emm = node.syntax();
-                            println!("{} {}", ptr.syntax(), node_text_range);
-                            // let pat = ptr;
-                            // let analyzer =
-                            //     hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
-                                
-                            // if let Some(name) = pat.name() {
-                            //     let text = name.text();
-                            //     let shadow_count =
-                            //         bindings_shadow_count.entry(text.clone()).or_default();
-                                
-                            //     if let Some(expr) = pat.syntax().siblings(Direction::Next).find_map(ast::Expr::cast) {
-                            //         println!("{} {}", pat.syntax(), expr.syntax());
-                            //         let type_of_node = analyzer.type_of(db, &expr).unwrap();
-                                    
-                                
-                            //     }
-                            //     else{
-                            //         binding_hash = Some(calc_binding_hash(file_id, &text, *shadow_count))
-                            //     }
-                            // }
+                            println!("FUNCC{} {}", binding_hash.unwrap(), node_text_range);
                             "function"
                         },
                         Some(AssocItem(hir::AssocItem::Const(_))) => "constant",
                         Some(AssocItem(hir::AssocItem::TypeAlias(_))) => "type",
                         Some(Def(hir::ModuleDef::Module(_))) => "module",
-                        Some(Def(hir::ModuleDef::Function(_))) => "function",
+                        Some(Def(hir::ModuleDef::Function(ptr))) => {
+                            // try FnData.ret_type
+                            let this_node = node.as_node().cloned().unwrap();
+                            let node_text_range = this_node.text_range();
+                            println!("MODFUNCC {} {}",  name_ref.syntax(), node_text_range);
+                            let analyzer =
+                                hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
+                            
+                            if let Some(expr) = ast::Expr::cast(name_ref.syntax().parent().unwrap().parent().unwrap().parent().unwrap().parent().unwrap())
+                            {
+                                println!("MODEXPR{} {}", name_ref.syntax(), expr.syntax());
+                                let type_of_node = analyzer.type_of(db, &expr).unwrap();
+                                binding_hash = Some(calc_binding_hash_type(file_id, &type_of_node));
+                                
+                                
+                            }
+                            "function"
+                        },
                         Some(Def(hir::ModuleDef::Adt(_))) => "type",
                         Some(Def(hir::ModuleDef::EnumVariant(_))) => "constant",
                         Some(Def(hir::ModuleDef::Const(_))) => "constant",
@@ -226,17 +223,6 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             *shadow_count += 1;
                             //let ty = analyzer.type_of_pat(db, &pat);
                             // start experiment
-                            // fn calc_stupid_hash(Op : Option<Ty>) -> u64 {
-                                
-                            //     let mut hasher = std::collections::hash_map::DefaultHasher::new();
-                            //     ty.hash(&mut hasher);
-                            //     hasher.finish()
-                            // }
-                            // let hash_val = match ty {
-                            //     Some (t) => calc_stupid_hash(t),
-                            //     None => 0,
-                            // };
-                            
                             let this_node = node.as_node().cloned().unwrap();
                             let node_text_range = this_node.text_range();
                             let mut expr = algo::find_node_at_offset::<ast::Expr>(&root, node_text_range.start()).unwrap();

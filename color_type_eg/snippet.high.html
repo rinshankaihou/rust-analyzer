@@ -3,39 +3,35 @@
 a {
     let a = Bar::foo();
     let b =  <Bar as Foo>::foo();
-    "hohoho"
+    "hohoho".to_string()
 }
+FUNCC6594084484094889909 [315; 318)
 b {
     let a = Bar::foo();
     let b =  <Bar as Foo>::foo();
-    "hohoho"
+    "hohoho".to_string()
 }
+FUNCC3093279096838844612 [349; 352)
 balance {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -46,26 +42,20 @@ sugar {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -76,26 +66,20 @@ ice {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -106,26 +90,20 @@ price {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -136,26 +114,20 @@ str1 {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -165,272 +137,89 @@ str2 {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-te {
+thing {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
 tea {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
 tea1 {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea2 {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -440,178 +229,43 @@ tea2 {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-tea2 {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-tea2 {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
 tea_alter {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-tea_alter {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
-    let balance = balance - price;
-    format!("{a} AHHHHHHH!", a = tea);
-}
-str1 "Oolong milktea".to_string()
-str2 "30% sugar no ice".to_string()
-str2 "30% sugar no ice".to_string()
-tea_alter {
-    eg1();
-    let balance = -37;
-    let sugar : u32 = 30;
-    let ice : u32 = 0;
-    let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
-    
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
-    let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
@@ -621,127 +275,92 @@ mt {
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-tea str1 + str2
-sugar 30
-ice 0
 mt2 {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-tea1 str1 + str2
-sugar 30
-ice 0
 mt3 {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-tea2 str1 + str2
-sugar 30
-ice 0
 balance {
     eg1();
     let balance = -37;
     let sugar : u32 = 30;
     let ice : u32 = 0;
     let price : u64 = 10000000;
-    let str1 : string = "Oolong milktea".to_string();
-    let str2 : string = "30% sugar no ice".to_string();
-    let te : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea : string = str1 + str2;
-    let tea1 : string = str1 + str2;
+    let str1 : String = "Oolong milktea".to_string();
+    let str2 : String = "30% sugar no ice".to_string();
+    let thing = sugar + ice;
     
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = "shadow tea2";
-    let tea2 : string = str1 + str2;
-    let tea_alter = str1 + str2;
-    let tea_alter = str1 + str2 + str2;
+    let tea = "tea";
+    let tea1= "tea1";
+    let tea2= "shadow tea2";
+    // let tea2= str1 + str2;
+    // let tea_alter = str1 + str2;
+    // let tea_alter = str1 + str2 + str2;
     let tea_alter = "hahahaha";
-    let mt = MilkTea(tea, sugar, ice);
-    let mt2 = MilkTea(tea1, sugar, ice);
-    let mt3 = MilkTea(tea2, sugar, ice);
+    let mt = MilkTea{tea, sugar, ice,};
+    let mt2 = MilkTea{tea1, sugar, ice};
+    let mt3 = MilkTea{tea2, sugar, ice};
     let balance = balance - price;
     format!("{a} AHHHHHHH!", a = tea);
 }
-balance -37
-price 10000000
 
 <style>
 body                { margin: 0; }
@@ -763,8 +382,9 @@ pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padd
 .keyword\.unsafe   { color: #DFAF8F; }
 .keyword\.control  { color: #F0DFAF; font-weight: bold; }
 </style>
-<pre><code><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="type">MilkTea</span> {
-    <span class="comment">//pub tea : str,</span>
+<pre><code><span class="keyword">use</span> <span class="text">std</span>::<span class="text">string</span>::<span class="text">String</span>;
+<span class="keyword">pub</span> <span class="keyword">struct</span> <span class="type">MilkTea</span>&lt;<span class="parameter">'a</span>&gt; {
+    <span class="keyword">pub</span> <span class="field">tea</span> <span class="parameter">'a</span> : &<span class="field">str</span>,
     <span class="keyword">pub</span> <span class="field">sugar</span>: <span class="type">u32</span>,
     <span class="keyword">pub</span> <span class="field">ice</span>: <span class="type">u32</span>,
 }
@@ -787,10 +407,10 @@ pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padd
     }
 }
 
-<span class="keyword">fn</span> <span class="function">eg1</span>() -&gt; <span class="type">str</span> {
+<span class="keyword">fn</span> <span class="function">eg1</span>() -&gt; <span class="text">String</span> {
     <span class="keyword">let</span> <span class="variable" data-binding-hash="8103230962190601084" style="color: hsl(65,69%,54%);">a</span> = <span class="type">Bar</span>::<span class="function" data-binding-hash="6594084484094889909" style="color: hsl(105,98%,64%);">foo</span>();
     <span class="keyword">let</span> <span class="variable" data-binding-hash="8103230962190601084" style="color: hsl(65,69%,54%);">b</span> =  &lt;<span class="type">Bar</span> <span class="keyword">as</span> <span class="type">Foo</span>&gt;::<span class="function" data-binding-hash="3093279096838844612" style="color: hsl(11,91%,50%);">foo</span>();
-    <span class="string">"hohoho"</span>
+    <span class="string">"hohoho"</span>.<span class="text">to_string</span>()
 }
 
 <span class="keyword">fn</span> <span class="function">main</span>() {
@@ -799,26 +419,20 @@ pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padd
     <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">sugar</span> : <span class="type">u32</span> = <span class="literal">30</span>;
     <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ice</span> : <span class="type">u32</span> = <span class="literal">0</span>;
     <span class="keyword">let</span> <span class="variable" data-binding-hash="14514325221045522049" style="color: hsl(196,84%,82%);">price</span> : <span class="type">u64</span> = <span class="literal">10000000</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> : <span class="text">string</span> = <span class="string">"Oolong milktea"</span>.<span class="text">to_string</span>();
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span> : <span class="text">string</span> = <span class="string">"30% sugar no ice"</span>.<span class="text">to_string</span>();
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">te</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea1</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> : <span class="text">String</span> = <span class="string">"Oolong milktea"</span>.<span class="text">to_string</span>();
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span> : <span class="text">String</span> = <span class="string">"30% sugar no ice"</span>.<span class="text">to_string</span>();
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">thing</span> = <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">sugar</span> + <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ice</span>;
     
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea2</span> : <span class="text">string</span> = <span class="string">"shadow tea2"</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea2</span> : <span class="text">string</span> = <span class="string">"shadow tea2"</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea2</span> : <span class="text">string</span> = <span class="string">"shadow tea2"</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea2</span> : <span class="text">string</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea_alter</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">tea_alter</span> = <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str1</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span> + <span class="variable" data-binding-hash="7341285155321274475" style="color: hsl(46,91%,77%);">str2</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea</span> = <span class="string">"tea"</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea1</span>= <span class="string">"tea1"</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea2</span>= <span class="string">"shadow tea2"</span>;
+    <span class="comment">// let tea2= str1 + str2;</span>
+    <span class="comment">// let tea_alter = str1 + str2;</span>
+    <span class="comment">// let tea_alter = str1 + str2 + str2;</span>
     <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">tea_alter</span> = <span class="string">"hahahaha"</span>;
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt</span> = <span class="type">MilkTea</span>(<span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">sugar</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ice</span>);
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt2</span> = <span class="type">MilkTea</span>(<span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea1</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">sugar</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ice</span>);
-    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt3</span> = <span class="type">MilkTea</span>(<span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">tea2</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">sugar</span>, <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ice</span>);
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt</span> = <span class="type">MilkTea</span>{<span class="field">tea</span>, <span class="field">sugar</span>, <span class="field">ice</span>,};
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt2</span> = <span class="type">MilkTea</span>{<span class="text">tea1</span>, <span class="field">sugar</span>, <span class="field">ice</span>};
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">mt3</span> = <span class="type">MilkTea</span>{<span class="text">tea2</span>, <span class="field">sugar</span>, <span class="field">ice</span>};
     <span class="keyword">let</span> <span class="variable" data-binding-hash="14514325221045522049" style="color: hsl(196,84%,82%);">balance</span> = <span class="variable" data-binding-hash="14514325221045522049" style="color: hsl(196,84%,82%);">balance</span> - <span class="variable" data-binding-hash="14514325221045522049" style="color: hsl(196,84%,82%);">price</span>;
     <span class="macro">format</span><span class="macro">!</span>(<span class="string">"{a} AHHHHHHH!"</span>, a = tea);
 }</code></pre>
