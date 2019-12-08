@@ -1,8 +1,9 @@
-//! FIXME: write short doc here
+// improve color shceme & type alias & func calls
 
+//! FIXME: write short doc here
 use rustc_hash::{FxHashMap, FxHashSet};
 
-use hir::{Mutability, Ty};
+use hir::{Mutability, Ty,};
 use ra_db::SourceDatabase;
 use ra_prof::profile;
 use ra_syntax::{
@@ -10,13 +11,20 @@ use ra_syntax::{
     AstNode, Direction, SmolStr, SyntaxElement, SyntaxKind,
     SyntaxKind::*,
     TextRange, T,
+    algo,
 };
 
 use crate::{
     db::RootDatabase,
     references::{classify_name_ref, NameKind::*},
     FileId,
+    // ty::display::HirDisplay,
 };
+
+// use crate::{
+//       
+//     SourceAnalyzer,
+// };
 
 #[derive(Debug)]
 pub struct HighlightedRange {
@@ -77,6 +85,19 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
         hash((file_id, text, shadow_count))
     }
 
+    // alternate hash function
+    fn calc_binding_hash_type(file_id: FileId, ty: &Ty) -> u64 {
+        fn hash<T: std::hash::Hash + std::fmt::Debug>(x: T) -> u64 {
+            use std::{collections::hash_map::DefaultHasher, hash::Hasher};
+
+            let mut hasher = DefaultHasher::new();
+            x.hash(&mut hasher);
+            hasher.finish()
+        }
+
+        hash((file_id, ty))
+    }
+
     // Visited nodes to handle highlighting priorities
     // FIXME: retain only ranges here
     let mut highlighted: FxHashSet<SyntaxElement> = FxHashSet::default();
@@ -102,10 +123,50 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                 }
                 if let Some(name_ref) = node.as_node().cloned().and_then(ast::NameRef::cast) {
                     let name_kind = classify_name_ref(db, file_id, &name_ref).map(|d| d.kind);
+                    
+                    // let opt_this_node = node.as_node().cloned();
+                    // if let Some(this_node) = opt_this_node{
+                    //     let node_text_range = this_node.text_range();
+                    //     println!("{}", this_node);
+                    //     println!("{}", node_text_range);
+                    //     if let Some(expr) = algo::find_node_at_offset::<ast::Expr>(&root, node_text_range.start()){
+                    //         println!("{}", expr.syntax());
+                    //     }
+                        
+                        
+                    // }
+                    
+    
                     match name_kind {
                         Some(Macro(_)) => "macro",
                         Some(Field(_)) => "field",
-                        Some(AssocItem(hir::AssocItem::Function(_))) => "function",
+                        Some(AssocItem(hir::AssocItem::Function(ptr))) => {
+                            binding_hash = Some(calc_binding_hash_type(file_id, &ptr.ty(db)));
+                            let this_node = node.as_node().cloned().unwrap();
+                            let node_text_range = this_node.text_range();
+                            let emm = node.syntax();
+                            println!("{} {}", ptr.syntax(), node_text_range);
+                            // let pat = ptr;
+                            // let analyzer =
+                            //     hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
+                                
+                            // if let Some(name) = pat.name() {
+                            //     let text = name.text();
+                            //     let shadow_count =
+                            //         bindings_shadow_count.entry(text.clone()).or_default();
+                                
+                            //     if let Some(expr) = pat.syntax().siblings(Direction::Next).find_map(ast::Expr::cast) {
+                            //         println!("{} {}", pat.syntax(), expr.syntax());
+                            //         let type_of_node = analyzer.type_of(db, &expr).unwrap();
+                                    
+                                
+                            //     }
+                            //     else{
+                            //         binding_hash = Some(calc_binding_hash(file_id, &text, *shadow_count))
+                            //     }
+                            // }
+                            "function"
+                        },
                         Some(AssocItem(hir::AssocItem::Const(_))) => "constant",
                         Some(AssocItem(hir::AssocItem::TypeAlias(_))) => "type",
                         Some(Def(hir::ModuleDef::Module(_))) => "module",
@@ -120,16 +181,26 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                         Some(SelfType(_)) => "type",
                         Some(Pat((_, ptr))) => {
                             let pat = ptr.to_node(&root);
+                            let analyzer =
+                                hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
+                                
                             if let Some(name) = pat.name() {
                                 let text = name.text();
                                 let shadow_count =
                                     bindings_shadow_count.entry(text.clone()).or_default();
-                                binding_hash =
-                                    Some(calc_binding_hash(file_id, &text, *shadow_count))
+                                
+                                if let Some(expr) = pat.syntax().siblings(Direction::Next).find_map(ast::Expr::cast) {
+                                    //println!("{} {}", pat.syntax(), expr.syntax());
+                                    let type_of_node = analyzer.type_of(db, &expr).unwrap();
+                                    binding_hash = Some(calc_binding_hash_type(file_id, &type_of_node))
+                                
+                                }
+                                else{
+                                    binding_hash = Some(calc_binding_hash(file_id, &text, *shadow_count))
+                                }
                             }
 
-                            let analyzer =
-                                hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
+                            
                             if is_variable_mutable(db, &analyzer, ptr.to_node(&root)) {
                                 "variable.mut"
                             } else {
@@ -153,7 +224,32 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             let shadow_count =
                                 bindings_shadow_count.entry(text.clone()).or_default();
                             *shadow_count += 1;
-                            binding_hash = Some(calc_binding_hash(file_id, &text, *shadow_count))
+                            //let ty = analyzer.type_of_pat(db, &pat);
+                            // start experiment
+                            // fn calc_stupid_hash(Op : Option<Ty>) -> u64 {
+                                
+                            //     let mut hasher = std::collections::hash_map::DefaultHasher::new();
+                            //     ty.hash(&mut hasher);
+                            //     hasher.finish()
+                            // }
+                            // let hash_val = match ty {
+                            //     Some (t) => calc_stupid_hash(t),
+                            //     None => 0,
+                            // };
+                            
+                            let this_node = node.as_node().cloned().unwrap();
+                            let node_text_range = this_node.text_range();
+                            let mut expr = algo::find_node_at_offset::<ast::Expr>(&root, node_text_range.start()).unwrap();
+                            
+                      
+                            if let Some(_expr) = pat.syntax().siblings(Direction::Next).find_map(ast::Expr::cast) {
+                                println!("{} {}",this_node, expr.syntax());
+                                expr = _expr;
+                            }
+                            
+                            let type_of_node = analyzer.type_of(db, &expr).unwrap();
+                            binding_hash = Some(calc_binding_hash_type(file_id, &type_of_node));
+                            
                         }
 
                         if is_variable_mutable(db, &analyzer, pat) {
@@ -177,7 +273,20 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                     "text"
                 }
             }
-            INT_NUMBER | FLOAT_NUMBER | CHAR | BYTE => "literal",
+            INT_NUMBER | FLOAT_NUMBER | CHAR | BYTE => {
+                println!("{}", node.to_string());
+                // if let Some(this_node) = node.as_node().cloned() {
+                //             let node_text_range = this_node.text_range();
+                //             println!("{}", this_node);
+                //             println!("{}", node_text_range);
+                //             let expr = algo::find_node_at_offset::<ast::Expr>(&root, node_text_range.start()).unwrap();
+                            
+                            
+                //             println!("{}", expr.syntax());
+                // }
+                            
+                "literal"
+                },
             LIFETIME => "parameter",
             T![unsafe] => "keyword.unsafe",
             k if is_control_keyword(k) => "keyword.control",

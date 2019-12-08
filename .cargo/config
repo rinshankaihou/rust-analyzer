@@ -31,4 +31,4 @@ symbols      = "run --package ra_cli -- symbols -h"
 # cargo run --package ra_cli -- symbols < ./crates/ra_cli/src/main.rs > color_type_eg/cli_symbols_eg
 # cargo parse  < color_type_eg/snippet.rs > color_type_eg/snippet.parse
 canta        = "run --package ra_cli -- canta"
-# cargo canta -p1 25 -p2 40 < color_type_eg/snippet.rs > color_type_eg/snippet.temp
+# cargo canta -p1 117 -p2 120 < color_type_eg/snippet.rs > color_type_eg/snippet.temp

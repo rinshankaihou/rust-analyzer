@@ -95,14 +95,23 @@ fn main() -> Result<()> {
             let pos2 : u32 = pos2_str.parse::<u32>().unwrap();
             println!("{} {}", pos1, pos2);
             matches.finish().or_else(handle_extra_flags)?;
-            let range = TextRange::from_to(TextUnit::from(pos1), TextUnit::from(pos2));
-            //let (analysis, file_id) = Analysis::from_single_file(read_stdin()?);
+            
             let (analysis, file_id) = Analysis::from_single_file(read_stdin()?);
+            let range = TextRange::from_to(TextUnit::from(pos1), TextUnit::from(pos2));
             let type_def = analysis.type_of(
                 ra_db::FileRange {
                     file_id,
                     range
                 }).unwrap();
+            
+            // copied from ra_ide_api 
+            // let file_pos = ra_db::FilePosition { file_id, offset };
+            // let nav_info = match world.analysis().goto_type_definition(file_pos)? {
+            //     None => return Ok(None),
+            //     Some(it) => it,
+            // };
+            // let res = (position.file_id, nav_info).try_conv_with(&world)?;
+            // Ok(Some(res));
             println!("{}", type_def.unwrap());
 
         }
