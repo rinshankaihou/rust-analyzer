@@ -1,18 +1,33 @@
-//! ra_db defines basic database traits. The concrete DB is defined by ra_ide_api.
+//! ra_db defines basic database traits. The concrete DB is defined by ra_ide.
 mod cancellation;
 mod input;
+pub mod fixture;
 
 use std::{panic, sync::Arc};
 
 use ra_prof::profile;
 use ra_syntax::{ast, Parse, SourceFile, TextRange, TextUnit};
-use relative_path::{RelativePath, RelativePathBuf};
 
 pub use crate::{
     cancellation::Canceled,
-    input::{CrateGraph, CrateId, Dependency, Edition, FileId, SourceRoot, SourceRootId},
+    input::{CrateGraph, CrateId, Dependency, Edition, Env, FileId, SourceRoot, SourceRootId},
 };
+pub use relative_path::{RelativePath, RelativePathBuf};
 pub use salsa;
+
+#[macro_export]
+macro_rules! impl_intern_key {
+    ($name:ident) => {
+        impl $crate::salsa::InternKey for $name {
+            fn from_intern_id(v: $crate::salsa::InternId) -> Self {
+                $name(v)
+            }
+            fn as_intern_id(&self) -> $crate::salsa::InternId {
+                self.0
+            }
+        }
+    };
+}
 
 pub trait CheckCanceled {
     /// Aborts current query if there are pending changes.
@@ -134,10 +149,7 @@ impl<T: SourceDatabaseExt> FileLoader for FileLoaderDelegate<&'_ T> {
     ) -> Option<FileId> {
         let path = {
             let mut path = self.0.file_relative_path(anchor);
-            // Workaround for relative path API: turn `lib.rs` into ``.
-            if !path.pop() {
-                path = RelativePathBuf::default();
-            }
+            assert!(path.pop());
             path.push(relative_path);
             path.normalize()
         };

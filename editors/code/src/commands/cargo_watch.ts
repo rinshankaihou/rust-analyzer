@@ -9,13 +9,13 @@ import { StatusDisplay } from './watch_status';
 
 import {
     mapRustDiagnosticToVsCode,
-    RustDiagnostic
+    RustDiagnostic,
 } from '../utils/diagnostics/rust';
 import SuggestedFixCollection from '../utils/diagnostics/SuggestedFixCollection';
 import { areDiagnosticsEqual } from '../utils/diagnostics/vscode';
 
 export async function registerCargoWatchProvider(
-    subscriptions: vscode.Disposable[]
+    subscriptions: vscode.Disposable[],
 ): Promise<CargoWatchProvider | undefined> {
     let cargoExists = false;
 
@@ -30,7 +30,7 @@ export async function registerCargoWatchProvider(
 
     if (!cargoExists) {
         vscode.window.showErrorMessage(
-            `Couldn\'t find \'Cargo.toml\' at ${cargoTomlPath}`
+            `Couldn\'t find \'Cargo.toml\' at ${cargoTomlPath}`,
         );
         return;
     }
@@ -52,13 +52,13 @@ export class CargoWatchProvider implements vscode.Disposable {
 
     constructor() {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection(
-            'rustc'
+            'rustc',
         );
         this.statusDisplay = new StatusDisplay(
-            Server.config.cargoWatchOptions.command
+            Server.config.cargoWatchOptions.command,
         );
         this.outputChannel = vscode.window.createOutputChannel(
-            'Cargo Watch Trace'
+            'Cargo Watch Trace',
         );
 
         // Track `rustc`'s suggested fixes so we can convert them to code actions
@@ -68,15 +68,15 @@ export class CargoWatchProvider implements vscode.Disposable {
             this.suggestedFixCollection,
             {
                 providedCodeActionKinds:
-                    SuggestedFixCollection.PROVIDED_CODE_ACTION_KINDS
-            }
+                    SuggestedFixCollection.PROVIDED_CODE_ACTION_KINDS,
+            },
         );
     }
 
     public start() {
         if (this.cargoProcess) {
             vscode.window.showInformationMessage(
-                'Cargo Watch is already running'
+                'Cargo Watch is already running',
             );
             return;
         }
@@ -93,15 +93,20 @@ export class CargoWatchProvider implements vscode.Disposable {
             args = '"' + args + '"';
         }
 
+        const ignoreFlags = Server.config.cargoWatchOptions.ignore.reduce(
+            (flags, pattern) => [...flags, '--ignore', pattern],
+            [] as string[],
+        );
+
         // Start the cargo watch with json message
         this.cargoProcess = child_process.spawn(
             'cargo',
-            ['watch', '-x', args],
+            ['watch', '-x', args, ...ignoreFlags],
             {
                 stdio: ['ignore', 'pipe', 'pipe'],
                 cwd: vscode.workspace.rootPath,
-                windowsVerbatimArguments: true
-            }
+                windowsVerbatimArguments: true,
+            },
         );
 
         const stdoutData = new LineBuffer();
@@ -125,7 +130,7 @@ export class CargoWatchProvider implements vscode.Disposable {
 
         this.cargoProcess.on('error', (err: Error) => {
             this.logError(
-                'Error on cargo-watch process : {\n' + err.message + '}\n'
+                'Error on cargo-watch process : {\n' + err.message + '}\n',
             );
         });
 
@@ -218,12 +223,12 @@ export class CargoWatchProvider implements vscode.Disposable {
             const fileUri = location.uri;
 
             const diagnostics: vscode.Diagnostic[] = [
-                ...(this.diagnosticCollection!.get(fileUri) || [])
+                ...(this.diagnosticCollection!.get(fileUri) || []),
             ];
 
             // If we're building multiple targets it's possible we've already seen this diagnostic
             const isDuplicate = diagnostics.some(d =>
-                areDiagnosticsEqual(d, diagnostic)
+                areDiagnosticsEqual(d, diagnostic),
             );
             if (isDuplicate) {
                 return;
@@ -236,7 +241,7 @@ export class CargoWatchProvider implements vscode.Disposable {
                 for (const suggestedFix of suggestedFixes) {
                     this.suggestedFixCollection.addSuggestedFixForDiagnostic(
                         suggestedFix,
-                        diagnostic
+                        diagnostic,
                     );
                 }
 
@@ -244,7 +249,7 @@ export class CargoWatchProvider implements vscode.Disposable {
                 vscode.commands.executeCommand(
                     'vscode.executeCodeActionProvider',
                     fileUri,
-                    diagnostic.range
+                    diagnostic.range,
                 );
             }
         }

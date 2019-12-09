@@ -6,7 +6,7 @@ use rustc_hash::FxHashMap;
 
 use crossbeam_channel::{unbounded, Receiver};
 use ra_db::{CrateGraph, FileId, SourceRootId};
-use ra_ide_api::{AnalysisChange, AnalysisHost, FeatureFlags};
+use ra_ide::{AnalysisChange, AnalysisHost, FeatureFlags};
 use ra_project_model::{get_rustc_cfg_options, PackageRoot, ProjectWorkspace};
 use ra_vfs::{RootEntry, Vfs, VfsChange, VfsTask, Watch};
 use ra_vfs_glob::RustPackageFilterBuilder;
@@ -117,9 +117,12 @@ pub fn load(
                         done = true;
                     }
                 }
-                VfsChange::AddFile { .. }
-                | VfsChange::RemoveFile { .. }
-                | VfsChange::ChangeFile { .. } => {
+                VfsChange::AddFile { root, file, path, text } => {
+                    let source_root_id = vfs_root_to_id(root);
+                    let file_id = vfs_file_to_id(file);
+                    analysis_change.add_file(source_root_id, file_id, path, text);
+                }
+                VfsChange::RemoveFile { .. } | VfsChange::ChangeFile { .. } => {
                     // We just need the first scan, so just ignore these
                 }
             }

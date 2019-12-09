@@ -13,7 +13,7 @@
         "Other"
     ],
     "engines": {
-        "vscode": "^1.37.0"
+        "vscode": "^1.40.0"
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -27,32 +27,35 @@
         "travis": "npm run compile && npm run test && npm run lint && npm run prettier -- --write && git diff --exit-code"
     },
     "prettier": {
+        "singleQuote": true,
         "tabWidth": 4,
-        "singleQuote": true
+        "trailingComma": "all"
     },
     "dependencies": {
-        "seedrandom": "^3.0.1",
-        "vscode-languageclient": "^5.3.0-next.4"
+        "lookpath": "^1.0.3",
+        "seedrandom": "^3.0.5",
+        "vscode-languageclient": "^6.0.0-next.8"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",
         "@types/mocha": "^5.2.7",
-        "@types/node": "^10.14.13",
+        "@types/node": "^10.17.6",
         "@types/seedrandom": "^2.4.28",
-        "@types/vscode": "^1.37.0",
-        "glob": "^7.1.4",
-        "mocha": "^6.2.0",
-        "prettier": "^1.18.2",
-        "rollup": "^1.23.1",
+        "@types/vscode": "^1.40.0",
+        "glob": "^7.1.6",
+        "mocha": "^6.2.2",
+        "prettier": "^1.19.1",
+        "rollup": "^1.27.9",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-typescript": "^1.0.1",
+        "rollup-plugin-sourcemaps": "^0.4.2",
         "shx": "^0.3.1",
-        "tslint": "^5.18.0",
+        "tslint": "^5.20.1",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "^3.5.3",
-        "vsce": "^1.67.0",
-        "vscode-test": "^1.2.0"
+        "typescript": "^3.7.3",
+        "vsce": "^1.70.0",
+        "vscode-test": "^1.2.3"
     },
     "activationEvents": [
         "onLanguage:rust",
@@ -88,6 +91,11 @@
             {
                 "command": "rust-analyzer.syntaxTree",
                 "title": "Show Syntax Tree",
+                "category": "Rust Analyzer"
+            },
+            {
+                "command": "rust-analyzer.expandMacro",
+                "title": "Expand macro recursively",
                 "category": "Rust Analyzer"
             },
             {
@@ -224,6 +232,11 @@
                     "description": "`cargo-watch` command. (e.g: `clippy` will run as `cargo watch -x clippy` )",
                     "default": "check"
                 },
+                "rust-analyzer.cargo-watch.ignore": {
+                    "type": "array",
+                    "description": "A list of patterns for cargo-watch to ignore (will be passed as `--ignore`)",
+                    "default": []
+                },
                 "rust-analyzer.trace.server": {
                     "type": "string",
                     "scope": "window",
@@ -260,6 +273,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Display additional type information in the editor"
+                },
+                "rust-analyzer.maxInlayHintLength": {
+                    "type": "number",
+                    "default": 20,
+                    "description": "Maximum length for inlay hints"
                 }
             }
         },

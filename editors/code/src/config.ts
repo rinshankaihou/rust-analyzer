@@ -12,6 +12,7 @@ export interface CargoWatchOptions {
     arguments: string;
     command: string;
     trace: CargoWatchTraceOptions;
+    ignore: string[];
 }
 
 export class Config {
@@ -19,24 +20,27 @@ export class Config {
     public rainbowHighlightingOn = false;
     public enableEnhancedTyping = true;
     public raLspServerPath = RA_LSP_DEBUG || 'ra_lsp_server';
-    public showWorkspaceLoadedNotification = true;
     public lruCapacity: null | number = null;
     public displayInlayHints = true;
+    public maxInlayHintLength: null | number = null;
     public excludeGlobs = [];
     public useClientWatching = false;
     public featureFlags = {};
+    // for internal use
+    public withSysroot: null | boolean = null;
     public cargoWatchOptions: CargoWatchOptions = {
         enableOnStartup: 'ask',
         trace: 'off',
         arguments: '',
-        command: ''
+        command: '',
+        ignore: [],
     };
 
     private prevEnhancedTyping: null | boolean = null;
 
     constructor() {
         vscode.workspace.onDidChangeConfiguration(_ =>
-            this.userConfigChanged()
+            this.userConfigChanged(),
         );
         this.userConfigChanged();
     }
@@ -49,13 +53,7 @@ export class Config {
 
         if (config.has('rainbowHighlightingOn')) {
             this.rainbowHighlightingOn = config.get(
-                'rainbowHighlightingOn'
-            ) as boolean;
-        }
-
-        if (config.has('showWorkspaceLoadedNotification')) {
-            this.showWorkspaceLoadedNotification = config.get(
-                'showWorkspaceLoadedNotification'
+                'rainbowHighlightingOn',
             ) as boolean;
         }
 
@@ -65,7 +63,7 @@ export class Config {
 
         if (config.has('enableEnhancedTyping')) {
             this.enableEnhancedTyping = config.get(
-                'enableEnhancedTyping'
+                'enableEnhancedTyping',
             ) as boolean;
 
             if (this.prevEnhancedTyping === null) {
@@ -80,12 +78,12 @@ export class Config {
             vscode.window
                 .showInformationMessage(
                     'Changing enhanced typing setting requires a reload',
-                    reloadAction
+                    reloadAction,
                 )
                 .then(selectedAction => {
                     if (selectedAction === reloadAction) {
                         vscode.commands.executeCommand(
-                            'workbench.action.reloadWindow'
+                            'workbench.action.reloadWindow',
                         );
                     }
                 });
@@ -106,21 +104,28 @@ export class Config {
         if (config.has('trace.cargo-watch')) {
             this.cargoWatchOptions.trace = config.get<CargoWatchTraceOptions>(
                 'trace.cargo-watch',
-                'off'
+                'off',
             );
         }
 
         if (config.has('cargo-watch.arguments')) {
             this.cargoWatchOptions.arguments = config.get<string>(
                 'cargo-watch.arguments',
-                ''
+                '',
             );
         }
 
         if (config.has('cargo-watch.command')) {
             this.cargoWatchOptions.command = config.get<string>(
                 'cargo-watch.command',
-                ''
+                '',
+            );
+        }
+
+        if (config.has('cargo-watch.ignore')) {
+            this.cargoWatchOptions.ignore = config.get<string[]>(
+                'cargo-watch.ignore',
+                [],
             );
         }
 
@@ -131,6 +136,11 @@ export class Config {
         if (config.has('displayInlayHints')) {
             this.displayInlayHints = config.get('displayInlayHints') as boolean;
         }
+        if (config.has('maxInlayHintLength')) {
+            this.maxInlayHintLength = config.get(
+                'maxInlayHintLength',
+            ) as number;
+        }
         if (config.has('excludeGlobs')) {
             this.excludeGlobs = config.get('excludeGlobs') || [];
         }
@@ -139,6 +149,9 @@ export class Config {
         }
         if (config.has('featureFlags')) {
             this.featureFlags = config.get('featureFlags') || {};
+        }
+        if (config.has('withSysroot')) {
+            this.withSysroot = config.get('withSysroot') || false;
         }
     }
 }

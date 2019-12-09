@@ -13,10 +13,20 @@ use crate::{
         make::{self, tokens},
         AstNode, TypeBoundsOwner,
     },
-    AstToken, Direction, InsertPosition, SmolStr, SyntaxElement,
+    AstToken, Direction, InsertPosition, SmolStr, SyntaxElement, SyntaxKind,
     SyntaxKind::{ATTR, COMMENT, WHITESPACE},
     SyntaxNode, SyntaxToken, T,
 };
+
+impl ast::BinExpr {
+    #[must_use]
+    pub fn replace_op(&self, op: SyntaxKind) -> Option<ast::BinExpr> {
+        let op_node: SyntaxElement = self.op_details()?.0.into();
+        let to_insert: Option<SyntaxElement> = Some(tokens::op(op).into());
+        let replace_range = RangeInclusive::new(op_node.clone(), op_node);
+        Some(replace_children(self, replace_range, to_insert.into_iter()))
+    }
+}
 
 impl ast::FnDef {
     #[must_use]
@@ -284,6 +294,34 @@ impl IndentLevel {
             .collect();
         algo::replace_descendants(&node, &replacements)
     }
+
+    pub fn decrease_indent<N: AstNode>(self, node: N) -> N {
+        N::cast(self._decrease_indent(node.syntax().clone())).unwrap()
+    }
+
+    fn _decrease_indent(self, node: SyntaxNode) -> SyntaxNode {
+        let replacements: FxHashMap<SyntaxElement, SyntaxElement> = node
+            .descendants_with_tokens()
+            .filter_map(|el| el.into_token())
+            .filter_map(ast::Whitespace::cast)
+            .filter(|ws| {
+                let text = ws.syntax().text();
+                text.contains('\n')
+            })
+            .map(|ws| {
+                (
+                    ws.syntax().clone().into(),
+                    make::tokens::whitespace(
+                        &ws.syntax()
+                            .text()
+                            .replace(&format!("\n{:1$}", "", self.0 as usize * 4), "\n"),
+                    )
+                    .into(),
+                )
+            })
+            .collect();
+        algo::replace_descendants(&node, &replacements)
+    }
 }
 
 // FIXME: replace usages with IndentLevel above
@@ -330,7 +368,7 @@ fn replace_children<N: AstNode>(
 fn test_increase_indent() {
     let arm_list = {
         let arm = make::match_arm(iter::once(make::placeholder_pat().into()), make::expr_unit());
-        make::match_arm_list(vec![arm.clone(), arm].into_iter())
+        make::match_arm_list(vec![arm.clone(), arm])
     };
     assert_eq!(
         arm_list.syntax().to_string(),
