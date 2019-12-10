@@ -1,0 +1,901 @@
+SOURCE_FILE@[0; 1977)
+  STRUCT_DEF@[0; 70)
+    ATTR@[0; 16)
+      POUND@[0; 1) "#"
+      L_BRACK@[1; 2) "["
+      PATH@[2; 8)
+        PATH_SEGMENT@[2; 8)
+          NAME_REF@[2; 8)
+            IDENT@[2; 8) "derive"
+      TOKEN_TREE@[8; 15)
+        L_PAREN@[8; 9) "("
+        IDENT@[9; 14) "Debug"
+        R_PAREN@[14; 15) ")"
+      R_BRACK@[15; 16) "]"
+    WHITESPACE@[16; 17) "\n"
+    STRUCT_KW@[17; 23) "struct"
+    WHITESPACE@[23; 24) " "
+    NAME@[24; 30)
+      IDENT@[24; 30) "Person"
+    TYPE_PARAM_LIST@[30; 34)
+      L_ANGLE@[30; 31) "<"
+      LIFETIME_PARAM@[31; 33)
+        LIFETIME@[31; 33) "\'a"
+      R_ANGLE@[33; 34) ">"
+    WHITESPACE@[34; 35) " "
+    RECORD_FIELD_DEF_LIST@[35; 70)
+      L_CURLY@[35; 36) "{"
+      WHITESPACE@[36; 41) "\n    "
+      RECORD_FIELD_DEF@[41; 54)
+        NAME@[41; 45)
+          IDENT@[41; 45) "name"
+        COLON@[45; 46) ":"
+        WHITESPACE@[46; 47) " "
+        REFERENCE_TYPE@[47; 54)
+          AMP@[47; 48) "&"
+          LIFETIME@[48; 50) "\'a"
+          WHITESPACE@[50; 51) " "
+          PATH_TYPE@[51; 54)
+            PATH@[51; 54)
+              PATH_SEGMENT@[51; 54)
+                NAME_REF@[51; 54)
+                  IDENT@[51; 54) "str"
+      COMMA@[54; 55) ","
+      WHITESPACE@[55; 60) "\n    "
+      RECORD_FIELD_DEF@[60; 67)
+        NAME@[60; 63)
+          IDENT@[60; 63) "age"
+        COLON@[63; 64) ":"
+        WHITESPACE@[64; 65) " "
+        PATH_TYPE@[65; 67)
+          PATH@[65; 67)
+            PATH_SEGMENT@[65; 67)
+              NAME_REF@[65; 67)
+                IDENT@[65; 67) "u8"
+      COMMA@[67; 68) ","
+      WHITESPACE@[68; 69) "\n"
+      R_CURLY@[69; 70) "}"
+  WHITESPACE@[70; 72) "\n\n"
+  STRUCT_DEF@[72; 100)
+    COMMENT@[72; 88) "// A unit struct"
+    WHITESPACE@[88; 89) "\n"
+    STRUCT_KW@[89; 95) "struct"
+    WHITESPACE@[95; 96) " "
+    NAME@[96; 99)
+      IDENT@[96; 99) "Nil"
+    SEMI@[99; 100) ";"
+  WHITESPACE@[100; 102) "\n\n"
+  STRUCT_DEF@[102; 142)
+    COMMENT@[102; 119) "// A tuple struct"
+    WHITESPACE@[119; 120) "\n"
+    STRUCT_KW@[120; 126) "struct"
+    WHITESPACE@[126; 127) " "
+    NAME@[127; 131)
+      IDENT@[127; 131) "Pair"
+    TUPLE_FIELD_DEF_LIST@[131; 141)
+      L_PAREN@[131; 132) "("
+      TUPLE_FIELD_DEF@[132; 135)
+        PATH_TYPE@[132; 135)
+          PATH@[132; 135)
+            PATH_SEGMENT@[132; 135)
+              NAME_REF@[132; 135)
+                IDENT@[132; 135) "i32"
+      COMMA@[135; 136) ","
+      WHITESPACE@[136; 137) " "
+      TUPLE_FIELD_DEF@[137; 140)
+        PATH_TYPE@[137; 140)
+          PATH@[137; 140)
+            PATH_SEGMENT@[137; 140)
+              NAME_REF@[137; 140)
+                IDENT@[137; 140) "f32"
+      R_PAREN@[140; 141) ")"
+    SEMI@[141; 142) ";"
+  WHITESPACE@[142; 144) "\n\n"
+  STRUCT_DEF@[144; 212)
+    COMMENT@[144; 171) "// A struct with two  ..."
+    WHITESPACE@[171; 172) "\n"
+    STRUCT_KW@[172; 178) "struct"
+    WHITESPACE@[178; 179) " "
+    NAME@[179; 184)
+      IDENT@[179; 184) "Point"
+    WHITESPACE@[184; 185) " "
+    RECORD_FIELD_DEF_LIST@[185; 212)
+      L_CURLY@[185; 186) "{"
+      WHITESPACE@[186; 191) "\n    "
+      RECORD_FIELD_DEF@[191; 197)
+        NAME@[191; 192)
+          IDENT@[191; 192) "x"
+        COLON@[192; 193) ":"
+        WHITESPACE@[193; 194) " "
+        PATH_TYPE@[194; 197)
+          PATH@[194; 197)
+            PATH_SEGMENT@[194; 197)
+              NAME_REF@[194; 197)
+                IDENT@[194; 197) "f32"
+      COMMA@[197; 198) ","
+      WHITESPACE@[198; 203) "\n    "
+      RECORD_FIELD_DEF@[203; 209)
+        NAME@[203; 204)
+          IDENT@[203; 204) "y"
+        COLON@[204; 205) ":"
+        WHITESPACE@[205; 206) " "
+        PATH_TYPE@[206; 209)
+          PATH@[206; 209)
+            PATH_SEGMENT@[206; 209)
+              NAME_REF@[206; 209)
+                IDENT@[206; 209) "f32"
+      COMMA@[209; 210) ","
+      WHITESPACE@[210; 211) "\n"
+      R_CURLY@[211; 212) "}"
+  WHITESPACE@[212; 214) "\n\n"
+  STRUCT_DEF@[214; 337)
+    COMMENT@[214; 266) "// Structs can be reu ..."
+    WHITESPACE@[266; 267) "\n"
+    ATTR@[267; 286)
+      POUND@[267; 268) "#"
+      L_BRACK@[268; 269) "["
+      PATH@[269; 274)
+        PATH_SEGMENT@[269; 274)
+          NAME_REF@[269; 274)
+            IDENT@[269; 274) "allow"
+      TOKEN_TREE@[274; 285)
+        L_PAREN@[274; 275) "("
+        IDENT@[275; 284) "dead_code"
+        R_PAREN@[284; 285) ")"
+      R_BRACK@[285; 286) "]"
+    WHITESPACE@[286; 287) "\n"
+    STRUCT_KW@[287; 293) "struct"
+    WHITESPACE@[293; 294) " "
+    NAME@[294; 303)
+      IDENT@[294; 303) "Rectangle"
+    WHITESPACE@[303; 304) " "
+    RECORD_FIELD_DEF_LIST@[304; 337)
+      L_CURLY@[304; 305) "{"
+      WHITESPACE@[305; 310) "\n    "
+      RECORD_FIELD_DEF@[310; 319)
+        NAME@[310; 312)
+          IDENT@[310; 312) "p1"
+        COLON@[312; 313) ":"
+        WHITESPACE@[313; 314) " "
+        PATH_TYPE@[314; 319)
+          PATH@[314; 319)
+            PATH_SEGMENT@[314; 319)
+              NAME_REF@[314; 319)
+                IDENT@[314; 319) "Point"
+      COMMA@[319; 320) ","
+      WHITESPACE@[320; 325) "\n    "
+      RECORD_FIELD_DEF@[325; 334)
+        NAME@[325; 327)
+          IDENT@[325; 327) "p2"
+        COLON@[327; 328) ":"
+        WHITESPACE@[328; 329) " "
+        PATH_TYPE@[329; 334)
+          PATH@[329; 334)
+            PATH_SEGMENT@[329; 334)
+              NAME_REF@[329; 334)
+                IDENT@[329; 334) "Point"
+      COMMA@[334; 335) ","
+      WHITESPACE@[335; 336) "\n"
+      R_CURLY@[336; 337) "}"
+  WHITESPACE@[337; 339) "\n\n"
+  FN_DEF@[339; 359)
+    FN_KW@[339; 341) "fn"
+    WHITESPACE@[341; 342) " "
+    NAME@[342; 348)
+      IDENT@[342; 348) "wuwuwu"
+    PARAM_LIST@[348; 350)
+      L_PAREN@[348; 349) "("
+      R_PAREN@[349; 350) ")"
+    WHITESPACE@[350; 351) " "
+    BLOCK_EXPR@[351; 359)
+      BLOCK@[351; 359)
+        L_CURLY@[351; 352) "{"
+        WHITESPACE@[352; 358) "\n    \n"
+        R_CURLY@[358; 359) "}"
+  WHITESPACE@[359; 360) "\n"
+  FN_DEF@[360; 454)
+    FN_KW@[360; 362) "fn"
+    WHITESPACE@[362; 363) " "
+    NAME@[363; 370)
+      IDENT@[363; 370) "ret_f32"
+    PARAM_LIST@[370; 372)
+      L_PAREN@[370; 371) "("
+      R_PAREN@[371; 372) ")"
+    WHITESPACE@[372; 373) " "
+    RET_TYPE@[373; 379)
+      THIN_ARROW@[373; 375) "->"
+      WHITESPACE@[375; 376) " "
+      PATH_TYPE@[376; 379)
+        PATH@[376; 379)
+          PATH_SEGMENT@[376; 379)
+            NAME_REF@[376; 379)
+              IDENT@[376; 379) "u32"
+    WHITESPACE@[379; 380) " "
+    BLOCK_EXPR@[380; 454)
+      BLOCK@[380; 454)
+        L_CURLY@[380; 381) "{"
+        WHITESPACE@[381; 386) "\n    "
+        LET_STMT@[386; 411)
+          LET_KW@[386; 389) "let"
+          WHITESPACE@[389; 390) " "
+          BIND_PAT@[390; 398)
+            NAME@[390; 398)
+              IDENT@[390; 398) "some_f32"
+          WHITESPACE@[398; 399) " "
+          COLON@[399; 400) ":"
+          WHITESPACE@[400; 401) " "
+          PATH_TYPE@[401; 404)
+            PATH@[401; 404)
+              PATH_SEGMENT@[401; 404)
+                NAME_REF@[401; 404)
+                  IDENT@[401; 404) "f32"
+          WHITESPACE@[404; 405) " "
+          EQ@[405; 406) "="
+          WHITESPACE@[406; 407) " "
+          LITERAL@[407; 410)
+            FLOAT_NUMBER@[407; 410) "0.0"
+          SEMI@[410; 411) ";"
+        WHITESPACE@[411; 416) "\n    "
+        LET_STMT@[416; 439)
+          LET_KW@[416; 419) "let"
+          WHITESPACE@[419; 420) " "
+          BIND_PAT@[420; 428)
+            NAME@[420; 428)
+              IDENT@[420; 428) "some_u32"
+          WHITESPACE@[428; 429) " "
+          COLON@[429; 430) ":"
+          WHITESPACE@[430; 431) " "
+          PATH_TYPE@[431; 434)
+            PATH@[431; 434)
+              PATH_SEGMENT@[431; 434)
+                NAME_REF@[431; 434)
+                  IDENT@[431; 434) "u32"
+          WHITESPACE@[434; 435) " "
+          EQ@[435; 436) "="
+          WHITESPACE@[436; 437) " "
+          LITERAL@[437; 438)
+            INT_NUMBER@[437; 438) "0"
+          SEMI@[438; 439) ";"
+        WHITESPACE@[439; 444) "\n    "
+        PATH_EXPR@[444; 452)
+          PATH@[444; 452)
+            PATH_SEGMENT@[444; 452)
+              NAME_REF@[444; 452)
+                IDENT@[444; 452) "some_u32"
+        WHITESPACE@[452; 453) "\n"
+        R_CURLY@[453; 454) "}"
+  WHITESPACE@[454; 456) "\n\n"
+  FN_DEF@[456; 546)
+    FN_KW@[456; 458) "fn"
+    WHITESPACE@[458; 459) " "
+    NAME@[459; 466)
+      IDENT@[459; 466) "ret_nil"
+    PARAM_LIST@[466; 468)
+      L_PAREN@[466; 467) "("
+      R_PAREN@[467; 468) ")"
+    WHITESPACE@[468; 469) " "
+    RET_TYPE@[469; 475)
+      THIN_ARROW@[469; 471) "->"
+      WHITESPACE@[471; 472) " "
+      PATH_TYPE@[472; 475)
+        PATH@[472; 475)
+          PATH_SEGMENT@[472; 475)
+            NAME_REF@[472; 475)
+              IDENT@[472; 475) "Nil"
+    WHITESPACE@[475; 476) " "
+    BLOCK_EXPR@[476; 546)
+      BLOCK@[476; 546)
+        L_CURLY@[476; 477) "{"
+        WHITESPACE@[477; 482) "\n    "
+        LET_STMT@[482; 507)
+          LET_KW@[482; 485) "let"
+          WHITESPACE@[485; 486) " "
+          BIND_PAT@[486; 494)
+            NAME@[486; 494)
+              IDENT@[486; 494) "some_f32"
+          WHITESPACE@[494; 495) " "
+          COLON@[495; 496) ":"
+          WHITESPACE@[496; 497) " "
+          PATH_TYPE@[497; 500)
+            PATH@[497; 500)
+              PATH_SEGMENT@[497; 500)
+                NAME_REF@[497; 500)
+                  IDENT@[497; 500) "f32"
+          WHITESPACE@[500; 501) " "
+          EQ@[501; 502) "="
+          WHITESPACE@[502; 503) " "
+          LITERAL@[503; 506)
+            FLOAT_NUMBER@[503; 506) "0.0"
+          SEMI@[506; 507) ";"
+        WHITESPACE@[507; 512) "\n    "
+        LET_STMT@[512; 531)
+          LET_KW@[512; 515) "let"
+          WHITESPACE@[515; 516) " "
+          BIND_PAT@[516; 524)
+            NAME@[516; 524)
+              IDENT@[516; 524) "some_nil"
+          WHITESPACE@[524; 525) " "
+          EQ@[525; 526) "="
+          WHITESPACE@[526; 527) " "
+          PATH_EXPR@[527; 530)
+            PATH@[527; 530)
+              PATH_SEGMENT@[527; 530)
+                NAME_REF@[527; 530)
+                  IDENT@[527; 530) "Nil"
+          SEMI@[530; 531) ";"
+        WHITESPACE@[531; 536) "\n    "
+        PATH_EXPR@[536; 544)
+          PATH@[536; 544)
+            PATH_SEGMENT@[536; 544)
+              NAME_REF@[536; 544)
+                IDENT@[536; 544) "some_nil"
+        WHITESPACE@[544; 545) "\n"
+        R_CURLY@[545; 546) "}"
+  WHITESPACE@[546; 547) "\n"
+  FN_DEF@[547; 1976)
+    FN_KW@[547; 549) "fn"
+    WHITESPACE@[549; 550) " "
+    NAME@[550; 554)
+      IDENT@[550; 554) "main"
+    PARAM_LIST@[554; 556)
+      L_PAREN@[554; 555) "("
+      R_PAREN@[555; 556) ")"
+    WHITESPACE@[556; 557) " "
+    BLOCK_EXPR@[557; 1976)
+      BLOCK@[557; 1976)
+        L_CURLY@[557; 558) "{"
+        WHITESPACE@[558; 563) "\n    "
+        LET_STMT@[563; 588)
+          LET_KW@[563; 566) "let"
+          WHITESPACE@[566; 567) " "
+          BIND_PAT@[567; 575)
+            NAME@[567; 575)
+              IDENT@[567; 575) "some_f32"
+          WHITESPACE@[575; 576) " "
+          EQ@[576; 577) "="
+          WHITESPACE@[577; 578) " "
+          CALL_EXPR@[578; 587)
+            PATH_EXPR@[578; 585)
+              PATH@[578; 585)
+                PATH_SEGMENT@[578; 585)
+                  NAME_REF@[578; 585)
+                    IDENT@[578; 585) "ret_f32"
+            ARG_LIST@[585; 587)
+              L_PAREN@[585; 586) "("
+              R_PAREN@[586; 587) ")"
+          SEMI@[587; 588) ";"
+        WHITESPACE@[588; 593) "\n    "
+        LET_STMT@[593; 624)
+          LET_KW@[593; 596) "let"
+          WHITESPACE@[596; 597) " "
+          BIND_PAT@[597; 610)
+            NAME@[597; 610)
+              IDENT@[597; 610) "some_more_f32"
+          WHITESPACE@[610; 612) "  "
+          EQ@[612; 613) "="
+          WHITESPACE@[613; 614) " "
+          CALL_EXPR@[614; 623)
+            PATH_EXPR@[614; 621)
+              PATH@[614; 621)
+                PATH_SEGMENT@[614; 621)
+                  NAME_REF@[614; 621)
+                    IDENT@[614; 621) "ret_f32"
+            ARG_LIST@[621; 623)
+              L_PAREN@[621; 622) "("
+              R_PAREN@[622; 623) ")"
+          SEMI@[623; 624) ";"
+        WHITESPACE@[624; 629) "\n    "
+        LET_STMT@[629; 654)
+          LET_KW@[629; 632) "let"
+          WHITESPACE@[632; 633) " "
+          BIND_PAT@[633; 641)
+            NAME@[633; 641)
+              IDENT@[633; 641) "some_nil"
+          WHITESPACE@[641; 642) " "
+          EQ@[642; 643) "="
+          WHITESPACE@[643; 644) " "
+          CALL_EXPR@[644; 653)
+            PATH_EXPR@[644; 651)
+              PATH@[644; 651)
+                PATH_SEGMENT@[644; 651)
+                  NAME_REF@[644; 651)
+                    IDENT@[644; 651) "ret_nil"
+            ARG_LIST@[651; 653)
+              L_PAREN@[651; 652) "("
+              R_PAREN@[652; 653) ")"
+          SEMI@[653; 654) ";"
+        WHITESPACE@[654; 659) "\n    "
+        EXPR_STMT@[659; 669)
+          CALL_EXPR@[659; 668)
+            PATH_EXPR@[659; 666)
+              PATH@[659; 666)
+                PATH_SEGMENT@[659; 666)
+                  NAME_REF@[659; 666)
+                    IDENT@[659; 666) "ret_nil"
+            ARG_LIST@[666; 668)
+              L_PAREN@[666; 667) "("
+              R_PAREN@[667; 668) ")"
+          SEMI@[668; 669) ";"
+        WHITESPACE@[669; 674) "\n    "
+        LET_STMT@[674; 686)
+          LET_KW@[674; 677) "let"
+          WHITESPACE@[677; 678) " "
+          BIND_PAT@[678; 679)
+            NAME@[678; 679)
+              IDENT@[678; 679) "n"
+          WHITESPACE@[679; 680) " "
+          EQ@[680; 681) "="
+          WHITESPACE@[681; 682) " "
+          PATH_EXPR@[682; 685)
+            PATH@[682; 685)
+              PATH_SEGMENT@[682; 685)
+                NAME_REF@[682; 685)
+                  IDENT@[682; 685) "Nil"
+          SEMI@[685; 686) ";"
+        WHITESPACE@[686; 691) "\n    "
+        EXPR_STMT@[691; 701)
+          CALL_EXPR@[691; 700)
+            PATH_EXPR@[691; 698)
+              PATH@[691; 698)
+                PATH_SEGMENT@[691; 698)
+                  NAME_REF@[691; 698)
+                    IDENT@[691; 698) "ret_f32"
+            ARG_LIST@[698; 700)
+              L_PAREN@[698; 699) "("
+              R_PAREN@[699; 700) ")"
+          SEMI@[700; 701) ";"
+        WHITESPACE@[701; 706) "\n    "
+        COMMENT@[706; 748) "// Create struct with ..."
+        WHITESPACE@[748; 753) "\n    "
+        LET_STMT@[753; 772)
+          LET_KW@[753; 756) "let"
+          WHITESPACE@[756; 757) " "
+          BIND_PAT@[757; 761)
+            NAME@[757; 761)
+              IDENT@[757; 761) "name"
+          WHITESPACE@[761; 762) " "
+          EQ@[762; 763) "="
+          WHITESPACE@[763; 764) " "
+          LITERAL@[764; 771)
+            STRING@[764; 771) "\"Peter\""
+          SEMI@[771; 772) ";"
+        WHITESPACE@[772; 777) "\n    "
+        LET_STMT@[777; 790)
+          LET_KW@[777; 780) "let"
+          WHITESPACE@[780; 781) " "
+          BIND_PAT@[781; 784)
+            NAME@[781; 784)
+              IDENT@[781; 784) "age"
+          WHITESPACE@[784; 785) " "
+          EQ@[785; 786) "="
+          WHITESPACE@[786; 787) " "
+          LITERAL@[787; 789)
+            INT_NUMBER@[787; 789) "27"
+          SEMI@[789; 790) ";"
+        WHITESPACE@[790; 795) "\n    "
+        LET_STMT@[795; 828)
+          LET_KW@[795; 798) "let"
+          WHITESPACE@[798; 799) " "
+          BIND_PAT@[799; 804)
+            NAME@[799; 804)
+              IDENT@[799; 804) "peter"
+          WHITESPACE@[804; 805) " "
+          EQ@[805; 806) "="
+          WHITESPACE@[806; 807) " "
+          RECORD_LIT@[807; 827)
+            PATH@[807; 813)
+              PATH_SEGMENT@[807; 813)
+                NAME_REF@[807; 813)
+                  IDENT@[807; 813) "Person"
+            WHITESPACE@[813; 814) " "
+            RECORD_FIELD_LIST@[814; 827)
+              L_CURLY@[814; 815) "{"
+              WHITESPACE@[815; 816) " "
+              RECORD_FIELD@[816; 820)
+                NAME_REF@[816; 820)
+                  IDENT@[816; 820) "name"
+              COMMA@[820; 821) ","
+              WHITESPACE@[821; 822) " "
+              RECORD_FIELD@[822; 825)
+                NAME_REF@[822; 825)
+                  IDENT@[822; 825) "age"
+              WHITESPACE@[825; 826) " "
+              R_CURLY@[826; 827) "}"
+          SEMI@[827; 828) ";"
+        WHITESPACE@[828; 838) "\n    \n    "
+        COMMENT@[838; 859) "// Print debug struct"
+        WHITESPACE@[859; 864) "\n    "
+        EXPR_STMT@[864; 888)
+          MACRO_CALL@[864; 887)
+            PATH@[864; 871)
+              PATH_SEGMENT@[864; 871)
+                NAME_REF@[864; 871)
+                  IDENT@[864; 871) "println"
+            EXCL@[871; 872) "!"
+            TOKEN_TREE@[872; 887)
+              L_PAREN@[872; 873) "("
+              STRING@[873; 879) "\"{:?}\""
+              COMMA@[879; 880) ","
+              WHITESPACE@[880; 881) " "
+              IDENT@[881; 886) "peter"
+              R_PAREN@[886; 887) ")"
+          SEMI@[887; 888) ";"
+        WHITESPACE@[888; 895) "\n\n\n    "
+        COMMENT@[895; 919) "// Instantiate a `Point`"
+        WHITESPACE@[919; 924) "\n    "
+        LET_STMT@[924; 968)
+          LET_KW@[924; 927) "let"
+          WHITESPACE@[927; 928) " "
+          BIND_PAT@[928; 933)
+            NAME@[928; 933)
+              IDENT@[928; 933) "point"
+          COLON@[933; 934) ":"
+          WHITESPACE@[934; 935) " "
+          PATH_TYPE@[935; 940)
+            PATH@[935; 940)
+              PATH_SEGMENT@[935; 940)
+                NAME_REF@[935; 940)
+                  IDENT@[935; 940) "Point"
+          WHITESPACE@[940; 941) " "
+          EQ@[941; 942) "="
+          WHITESPACE@[942; 943) " "
+          RECORD_LIT@[943; 967)
+            PATH@[943; 948)
+              PATH_SEGMENT@[943; 948)
+                NAME_REF@[943; 948)
+                  IDENT@[943; 948) "Point"
+            WHITESPACE@[948; 949) " "
+            RECORD_FIELD_LIST@[949; 967)
+              L_CURLY@[949; 950) "{"
+              WHITESPACE@[950; 951) " "
+              RECORD_FIELD@[951; 957)
+                NAME_REF@[951; 952)
+                  IDENT@[951; 952) "x"
+                COLON@[952; 953) ":"
+                WHITESPACE@[953; 954) " "
+                LITERAL@[954; 957)
+                  FLOAT_NUMBER@[954; 957) "0.3"
+              COMMA@[957; 958) ","
+              WHITESPACE@[958; 959) " "
+              RECORD_FIELD@[959; 965)
+                NAME_REF@[959; 960)
+                  IDENT@[959; 960) "y"
+                COLON@[960; 961) ":"
+                WHITESPACE@[961; 962) " "
+                LITERAL@[962; 965)
+                  FLOAT_NUMBER@[962; 965) "0.4"
+              WHITESPACE@[965; 966) " "
+              R_CURLY@[966; 967) "}"
+          SEMI@[967; 968) ";"
+        WHITESPACE@[968; 974) "\n\n    "
+        COMMENT@[974; 1007) "// Access the fields  ..."
+        WHITESPACE@[1007; 1012) "\n    "
+        EXPR_STMT@[1012; 1070)
+          MACRO_CALL@[1012; 1069)
+            PATH@[1012; 1019)
+              PATH_SEGMENT@[1012; 1019)
+                NAME_REF@[1012; 1019)
+                  IDENT@[1012; 1019) "println"
+            EXCL@[1019; 1020) "!"
+            TOKEN_TREE@[1020; 1069)
+              L_PAREN@[1020; 1021) "("
+              STRING@[1021; 1050) "\"point coordinates: ( ..."
+              COMMA@[1050; 1051) ","
+              WHITESPACE@[1051; 1052) " "
+              IDENT@[1052; 1057) "point"
+              DOT@[1057; 1058) "."
+              IDENT@[1058; 1059) "x"
+              COMMA@[1059; 1060) ","
+              WHITESPACE@[1060; 1061) " "
+              IDENT@[1061; 1066) "point"
+              DOT@[1066; 1067) "."
+              IDENT@[1067; 1068) "y"
+              R_PAREN@[1068; 1069) ")"
+          SEMI@[1069; 1070) ";"
+        WHITESPACE@[1070; 1076) "\n\n    "
+        COMMENT@[1076; 1160) "// Make a new point b ..."
+        WHITESPACE@[1160; 1165) "\n    "
+        LET_STMT@[1165; 1207)
+          LET_KW@[1165; 1168) "let"
+          WHITESPACE@[1168; 1169) " "
+          BIND_PAT@[1169; 1178)
+            NAME@[1169; 1178)
+              IDENT@[1169; 1178) "new_point"
+          WHITESPACE@[1178; 1179) " "
+          EQ@[1179; 1180) "="
+          WHITESPACE@[1180; 1181) " "
+          RECORD_LIT@[1181; 1206)
+            PATH@[1181; 1186)
+              PATH_SEGMENT@[1181; 1186)
+                NAME_REF@[1181; 1186)
+                  IDENT@[1181; 1186) "Point"
+            WHITESPACE@[1186; 1187) " "
+            RECORD_FIELD_LIST@[1187; 1206)
+              L_CURLY@[1187; 1188) "{"
+              WHITESPACE@[1188; 1189) " "
+              RECORD_FIELD@[1189; 1195)
+                NAME_REF@[1189; 1190)
+                  IDENT@[1189; 1190) "x"
+                COLON@[1190; 1191) ":"
+                WHITESPACE@[1191; 1192) " "
+                LITERAL@[1192; 1195)
+                  FLOAT_NUMBER@[1192; 1195) "0.1"
+              COMMA@[1195; 1196) ","
+              WHITESPACE@[1196; 1197) " "
+              DOTDOT@[1197; 1199) ".."
+              PATH_EXPR@[1199; 1204)
+                PATH@[1199; 1204)
+                  PATH_SEGMENT@[1199; 1204)
+                    NAME_REF@[1199; 1204)
+                      IDENT@[1199; 1204) "point"
+              WHITESPACE@[1204; 1205) " "
+              R_CURLY@[1205; 1206) "}"
+          SEMI@[1206; 1207) ";"
+        WHITESPACE@[1207; 1212) "\n    "
+        COMMENT@[1212; 1298) "// `new_point.y` will ..."
+        WHITESPACE@[1298; 1303) "\n    "
+        EXPR_STMT@[1303; 1364)
+          MACRO_CALL@[1303; 1363)
+            PATH@[1303; 1310)
+              PATH_SEGMENT@[1303; 1310)
+                NAME_REF@[1303; 1310)
+                  IDENT@[1303; 1310) "println"
+            EXCL@[1310; 1311) "!"
+            TOKEN_TREE@[1311; 1363)
+              L_PAREN@[1311; 1312) "("
+              STRING@[1312; 1336) "\"second point: ({}, {})\""
+              COMMA@[1336; 1337) ","
+              WHITESPACE@[1337; 1338) " "
+              IDENT@[1338; 1347) "new_point"
+              DOT@[1347; 1348) "."
+              IDENT@[1348; 1349) "x"
+              COMMA@[1349; 1350) ","
+              WHITESPACE@[1350; 1351) " "
+              IDENT@[1351; 1360) "new_point"
+              DOT@[1360; 1361) "."
+              IDENT@[1361; 1362) "y"
+              R_PAREN@[1362; 1363) ")"
+          SEMI@[1363; 1364) ";"
+        WHITESPACE@[1364; 1370) "\n\n    "
+        COMMENT@[1370; 1416) "// Destructure the po ..."
+        WHITESPACE@[1416; 1421) "\n    "
+        LET_STMT@[1421; 1460)
+          LET_KW@[1421; 1424) "let"
+          WHITESPACE@[1424; 1425) " "
+          RECORD_PAT@[1425; 1451)
+            PATH@[1425; 1430)
+              PATH_SEGMENT@[1425; 1430)
+                NAME_REF@[1425; 1430)
+                  IDENT@[1425; 1430) "Point"
+            WHITESPACE@[1430; 1431) " "
+            RECORD_FIELD_PAT_LIST@[1431; 1451)
+              L_CURLY@[1431; 1432) "{"
+              WHITESPACE@[1432; 1433) " "
+              RECORD_FIELD_PAT@[1433; 1440)
+                NAME@[1433; 1434)
+                  IDENT@[1433; 1434) "x"
+                COLON@[1434; 1435) ":"
+                WHITESPACE@[1435; 1436) " "
+                BIND_PAT@[1436; 1440)
+                  NAME@[1436; 1440)
+                    IDENT@[1436; 1440) "my_x"
+              COMMA@[1440; 1441) ","
+              WHITESPACE@[1441; 1442) " "
+              RECORD_FIELD_PAT@[1442; 1449)
+                NAME@[1442; 1443)
+                  IDENT@[1442; 1443) "y"
+                COLON@[1443; 1444) ":"
+                WHITESPACE@[1444; 1445) " "
+                BIND_PAT@[1445; 1449)
+                  NAME@[1445; 1449)
+                    IDENT@[1445; 1449) "my_y"
+              WHITESPACE@[1449; 1450) " "
+              R_CURLY@[1450; 1451) "}"
+          WHITESPACE@[1451; 1452) " "
+          EQ@[1452; 1453) "="
+          WHITESPACE@[1453; 1454) " "
+          PATH_EXPR@[1454; 1459)
+            PATH@[1454; 1459)
+              PATH_SEGMENT@[1454; 1459)
+                NAME_REF@[1454; 1459)
+                  IDENT@[1454; 1459) "point"
+          SEMI@[1459; 1460) ";"
+        WHITESPACE@[1460; 1466) "\n\n    "
+        LET_STMT@[1466; 1613)
+          LET_KW@[1466; 1469) "let"
+          WHITESPACE@[1469; 1470) " "
+          BIND_PAT@[1470; 1480)
+            NAME@[1470; 1480)
+              IDENT@[1470; 1480) "_rectangle"
+          WHITESPACE@[1480; 1481) " "
+          EQ@[1481; 1482) "="
+          WHITESPACE@[1482; 1483) " "
+          RECORD_LIT@[1483; 1612)
+            PATH@[1483; 1492)
+              PATH_SEGMENT@[1483; 1492)
+                NAME_REF@[1483; 1492)
+                  IDENT@[1483; 1492) "Rectangle"
+            WHITESPACE@[1492; 1493) " "
+            RECORD_FIELD_LIST@[1493; 1612)
+              L_CURLY@[1493; 1494) "{"
+              WHITESPACE@[1494; 1503) "\n        "
+              COMMENT@[1503; 1547) "// struct instantiati ..."
+              WHITESPACE@[1547; 1556) "\n        "
+              RECORD_FIELD@[1556; 1586)
+                NAME_REF@[1556; 1558)
+                  IDENT@[1556; 1558) "p1"
+                COLON@[1558; 1559) ":"
+                WHITESPACE@[1559; 1560) " "
+                RECORD_LIT@[1560; 1586)
+                  PATH@[1560; 1565)
+                    PATH_SEGMENT@[1560; 1565)
+                      NAME_REF@[1560; 1565)
+                        IDENT@[1560; 1565) "Point"
+                  WHITESPACE@[1565; 1566) " "
+                  RECORD_FIELD_LIST@[1566; 1586)
+                    L_CURLY@[1566; 1567) "{"
+                    WHITESPACE@[1567; 1568) " "
+                    RECORD_FIELD@[1568; 1575)
+                      NAME_REF@[1568; 1569)
+                        IDENT@[1568; 1569) "x"
+                      COLON@[1569; 1570) ":"
+                      WHITESPACE@[1570; 1571) " "
+                      PATH_EXPR@[1571; 1575)
+                        PATH@[1571; 1575)
+                          PATH_SEGMENT@[1571; 1575)
+                            NAME_REF@[1571; 1575)
+                              IDENT@[1571; 1575) "my_y"
+                    COMMA@[1575; 1576) ","
+                    WHITESPACE@[1576; 1577) " "
+                    RECORD_FIELD@[1577; 1584)
+                      NAME_REF@[1577; 1578)
+                        IDENT@[1577; 1578) "y"
+                      COLON@[1578; 1579) ":"
+                      WHITESPACE@[1579; 1580) " "
+                      PATH_EXPR@[1580; 1584)
+                        PATH@[1580; 1584)
+                          PATH_SEGMENT@[1580; 1584)
+                            NAME_REF@[1580; 1584)
+                              IDENT@[1580; 1584) "my_x"
+                    WHITESPACE@[1584; 1585) " "
+                    R_CURLY@[1585; 1586) "}"
+              COMMA@[1586; 1587) ","
+              WHITESPACE@[1587; 1596) "\n        "
+              RECORD_FIELD@[1596; 1605)
+                NAME_REF@[1596; 1598)
+                  IDENT@[1596; 1598) "p2"
+                COLON@[1598; 1599) ":"
+                WHITESPACE@[1599; 1600) " "
+                PATH_EXPR@[1600; 1605)
+                  PATH@[1600; 1605)
+                    PATH_SEGMENT@[1600; 1605)
+                      NAME_REF@[1600; 1605)
+                        IDENT@[1600; 1605) "point"
+              COMMA@[1605; 1606) ","
+              WHITESPACE@[1606; 1611) "\n    "
+              R_CURLY@[1611; 1612) "}"
+          SEMI@[1612; 1613) ";"
+        WHITESPACE@[1613; 1619) "\n\n    "
+        COMMENT@[1619; 1647) "// Instantiate a unit ..."
+        WHITESPACE@[1647; 1652) "\n    "
+        LET_STMT@[1652; 1667)
+          LET_KW@[1652; 1655) "let"
+          WHITESPACE@[1655; 1656) " "
+          BIND_PAT@[1656; 1660)
+            NAME@[1656; 1660)
+              IDENT@[1656; 1660) "_nil"
+          WHITESPACE@[1660; 1661) " "
+          EQ@[1661; 1662) "="
+          WHITESPACE@[1662; 1663) " "
+          PATH_EXPR@[1663; 1666)
+            PATH@[1663; 1666)
+              PATH_SEGMENT@[1663; 1666)
+                NAME_REF@[1663; 1666)
+                  IDENT@[1663; 1666) "Nil"
+          SEMI@[1666; 1667) ";"
+        WHITESPACE@[1667; 1673) "\n\n    "
+        COMMENT@[1673; 1702) "// Instantiate a tupl ..."
+        WHITESPACE@[1702; 1707) "\n    "
+        LET_STMT@[1707; 1731)
+          LET_KW@[1707; 1710) "let"
+          WHITESPACE@[1710; 1711) " "
+          BIND_PAT@[1711; 1715)
+            NAME@[1711; 1715)
+              IDENT@[1711; 1715) "pair"
+          WHITESPACE@[1715; 1716) " "
+          EQ@[1716; 1717) "="
+          WHITESPACE@[1717; 1718) " "
+          CALL_EXPR@[1718; 1730)
+            PATH_EXPR@[1718; 1722)
+              PATH@[1718; 1722)
+                PATH_SEGMENT@[1718; 1722)
+                  NAME_REF@[1718; 1722)
+                    IDENT@[1718; 1722) "Pair"
+            ARG_LIST@[1722; 1730)
+              L_PAREN@[1722; 1723) "("
+              LITERAL@[1723; 1724)
+                INT_NUMBER@[1723; 1724) "1"
+              COMMA@[1724; 1725) ","
+              WHITESPACE@[1725; 1726) " "
+              LITERAL@[1726; 1729)
+                FLOAT_NUMBER@[1726; 1729) "0.1"
+              R_PAREN@[1729; 1730) ")"
+          SEMI@[1730; 1731) ";"
+        WHITESPACE@[1731; 1737) "\n\n    "
+        COMMENT@[1737; 1775) "// Access the fields  ..."
+        WHITESPACE@[1775; 1780) "\n    "
+        EXPR_STMT@[1780; 1836)
+          MACRO_CALL@[1780; 1835)
+            PATH@[1780; 1787)
+              PATH_SEGMENT@[1780; 1787)
+                NAME_REF@[1780; 1787)
+                  IDENT@[1780; 1787) "println"
+            EXCL@[1787; 1788) "!"
+            TOKEN_TREE@[1788; 1835)
+              L_PAREN@[1788; 1789) "("
+              STRING@[1789; 1818) "\"pair contains {:?} a ..."
+              COMMA@[1818; 1819) ","
+              WHITESPACE@[1819; 1820) " "
+              IDENT@[1820; 1824) "pair"
+              DOT@[1824; 1825) "."
+              INT_NUMBER@[1825; 1826) "0"
+              COMMA@[1826; 1827) ","
+              WHITESPACE@[1827; 1828) " "
+              IDENT@[1828; 1832) "pair"
+              DOT@[1832; 1833) "."
+              INT_NUMBER@[1833; 1834) "1"
+              R_PAREN@[1834; 1835) ")"
+          SEMI@[1835; 1836) ";"
+        WHITESPACE@[1836; 1842) "\n\n    "
+        COMMENT@[1842; 1871) "// Destructure a tupl ..."
+        WHITESPACE@[1871; 1876) "\n    "
+        LET_STMT@[1876; 1910)
+          LET_KW@[1876; 1879) "let"
+          WHITESPACE@[1879; 1880) " "
+          TUPLE_STRUCT_PAT@[1880; 1902)
+            PATH@[1880; 1884)
+              PATH_SEGMENT@[1880; 1884)
+                NAME_REF@[1880; 1884)
+                  IDENT@[1880; 1884) "Pair"
+            L_PAREN@[1884; 1885) "("
+            BIND_PAT@[1885; 1892)
+              NAME@[1885; 1892)
+                IDENT@[1885; 1892) "integer"
+            COMMA@[1892; 1893) ","
+            WHITESPACE@[1893; 1894) " "
+            BIND_PAT@[1894; 1901)
+              NAME@[1894; 1901)
+                IDENT@[1894; 1901) "decimal"
+            R_PAREN@[1901; 1902) ")"
+          WHITESPACE@[1902; 1903) " "
+          EQ@[1903; 1904) "="
+          WHITESPACE@[1904; 1905) " "
+          PATH_EXPR@[1905; 1909)
+            PATH@[1905; 1909)
+              PATH_SEGMENT@[1905; 1909)
+                NAME_REF@[1905; 1909)
+                  IDENT@[1905; 1909) "pair"
+          SEMI@[1909; 1910) ";"
+        WHITESPACE@[1910; 1916) "\n\n    "
+        EXPR_STMT@[1916; 1974)
+          MACRO_CALL@[1916; 1973)
+            PATH@[1916; 1923)
+              PATH_SEGMENT@[1916; 1923)
+                NAME_REF@[1916; 1923)
+                  IDENT@[1916; 1923) "println"
+            EXCL@[1923; 1924) "!"
+            TOKEN_TREE@[1924; 1973)
+              L_PAREN@[1924; 1925) "("
+              STRING@[1925; 1954) "\"pair contains {:?} a ..."
+              COMMA@[1954; 1955) ","
+              WHITESPACE@[1955; 1956) " "
+              IDENT@[1956; 1963) "integer"
+              COMMA@[1963; 1964) ","
+              WHITESPACE@[1964; 1965) " "
+              IDENT@[1965; 1972) "decimal"
+              R_PAREN@[1972; 1973) ")"
+          SEMI@[1973; 1974) ";"
+        WHITESPACE@[1974; 1975) "\n"
+        R_CURLY@[1975; 1976) "}"
+  WHITESPACE@[1976; 1977) "\n"
+

@@ -1,0 +1,112 @@
+
+<style>
+body                { margin: 0; }
+pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+.comment            { color: #7F9F7F; }
+.string             { color: #CC9393; }
+.function           { color: #93E0E3; }
+.parameter          { color: #94BFF3; }
+.builtin            { color: #DD6718; }
+.text               { color: #DCDCCC; }
+.attribute          { color: #94BFF3; }
+.literal            { color: #BFEBBF; }
+.macro              { color: #94BFF3; }
+                            .parent()
+.variable           { color: #DCDCCC; }
+.variable\.mut     { color: #DCDCCC; text-decoration: underline; }
+
+.keyword            { color: #F0DFAF; }
+.keyword\.unsafe   { color: #DFAF8F; }
+.keyword\.control  { color: #F0DFAF; font-weight: bold; }
+</style>
+<pre><code><span class="attribute">#</span><span class="attribute">[</span><span class="attribute">derive</span><span class="attribute">(</span><span class="attribute">Debug</span><span class="attribute">)</span><span class="attribute">]</span>
+<span class="keyword">struct</span> <span class="type">Person</span>&lt;<span class="parameter">'a</span>&gt; {
+    <span class="field">name</span>: &<span class="parameter">'a</span> <span class="type">str</span>,
+    <span class="field">age</span>: <span class="type">u8</span>,
+}
+
+<span class="comment">// A unit struct</span>
+<span class="keyword">struct</span> <span class="type">Nil</span>;
+
+<span class="comment">// A tuple struct</span>
+<span class="keyword">struct</span> <span class="type">Pair</span>(<span class="type">i32</span>, <span class="type">f32</span>);
+
+<span class="comment">// A struct with two fields</span>
+<span class="keyword">struct</span> <span class="type">Point</span> {
+    <span class="field">x</span>: <span class="type">f32</span>,
+    <span class="field">y</span>: <span class="type">f32</span>,
+}
+
+<span class="comment">// Structs can be reused as fields of another struct</span>
+<span class="attribute">#</span><span class="attribute">[</span><span class="attribute">allow</span><span class="attribute">(</span><span class="attribute">dead_code</span><span class="attribute">)</span><span class="attribute">]</span>
+<span class="keyword">struct</span> <span class="type">Rectangle</span> {
+    <span class="field">p1</span>: <span class="type">Point</span>,
+    <span class="field">p2</span>: <span class="type">Point</span>,
+}
+
+<span class="keyword">fn</span> <span class="function">wuwuwu</span>() {
+    
+}
+<span class="keyword">fn</span> <span class="function">ret_f32</span>() -&gt; <span class="type">u32</span> {
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2173540718876351038" style="color: hsl(167,70%,76%);">some_f32</span> : <span class="type">f32</span> = <span class="literal">0.0</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">some_u32</span> : <span class="type">u32</span> = <span class="literal">0</span>;
+    <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">some_u32</span>
+}
+
+<span class="keyword">fn</span> <span class="function">ret_nil</span>() -&gt; <span class="type">Nil</span> {
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2173540718876351038" style="color: hsl(167,70%,76%);">some_f32</span> : <span class="type">f32</span> = <span class="literal">0.0</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">some_nil</span> = <span class="type">Nil</span>;
+    <span class="variable" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">some_nil</span>
+}
+<span class="keyword">fn</span> <span class="function">main</span>() {
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">some_f32</span> = <span class="function" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ret_f32</span>();
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">some_more_f32</span>  = <span class="function" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ret_f32</span>();
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">some_nil</span> = <span class="function" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">ret_nil</span>();
+    <span class="function" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">ret_nil</span>();
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">n</span> = <span class="type">Nil</span>;
+    <span class="function" data-binding-hash="10466672853232461119" style="color: hsl(251,74%,88%);">ret_f32</span>();
+    <span class="comment">// Create struct with field init shorthand</span>
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7343431117815186556" style="color: hsl(343,91%,58%);">name</span> = <span class="string">"Peter"</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2253469126908852463" style="color: hsl(337,92%,84%);">age</span> = <span class="literal">27</span>;
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2875723640510743218" style="color: hsl(282,79%,46%);">peter</span> = <span class="type">Person</span> { <span class="field">name</span>, <span class="field">age</span> };
+    
+    <span class="comment">// Print debug struct</span>
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">"{:?}"</span>, peter);
+
+
+    <span class="comment">// Instantiate a `Point`</span>
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2049474140351851020" style="color: hsl(39,70%,70%);">point</span>: <span class="type">Point</span> = <span class="type">Point</span> { <span class="field">x</span>: <span class="literal">0.3</span>, <span class="field">y</span>: <span class="literal">0.4</span> };
+
+    <span class="comment">// Access the fields of the point</span>
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">"point coordinates: ({}, {})"</span>, point.x, point.y);
+
+    <span class="comment">// Make a new point by using struct update syntax to use the fields of our other one</span>
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="2049474140351851020" style="color: hsl(39,70%,70%);">new_point</span> = <span class="type">Point</span> { <span class="field">x</span>: <span class="literal">0.1</span>, ..<span class="variable" data-binding-hash="2049474140351851020" style="color: hsl(39,70%,70%);">point</span> };
+    <span class="comment">// `new_point.y` will be the same as `point.y` because we used that field from `point`</span>
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">"second point: ({}, {})"</span>, new_point.x, new_point.y);
+
+    <span class="comment">// Destructure the point using a `let` binding</span>
+    <span class="keyword">let</span> <span class="type">Point</span> { <span class="function">x</span>: <span class="variable" data-binding-hash="9056485556434668313" style="color: hsl(58,69%,62%);">my_x</span>, <span class="function">y</span>: <span class="variable" data-binding-hash="9056485556434668313" style="color: hsl(58,69%,62%);">my_y</span> } = <span class="variable" data-binding-hash="2049474140351851020" style="color: hsl(39,70%,70%);">point</span>;
+
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="4943694855255573708" style="color: hsl(147,66%,50%);">_rectangle</span> = <span class="type">Rectangle</span> {
+        <span class="comment">// struct instantiation is an expression too</span>
+        <span class="field">p1</span>: <span class="type">Point</span> { <span class="field">x</span>: <span class="variable" data-binding-hash="5426441991597703206" style="color: hsl(2,52%,83%);">my_y</span>, <span class="field">y</span>: <span class="variable" data-binding-hash="1676686203715884601" style="color: hsl(5,48%,45%);">my_x</span> },
+        <span class="field">p2</span>: <span class="variable" data-binding-hash="2049474140351851020" style="color: hsl(39,70%,70%);">point</span>,
+    };
+
+    <span class="comment">// Instantiate a unit struct</span>
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7596063004437527766" style="color: hsl(117,72%,82%);">_nil</span> = <span class="type">Nil</span>;
+
+    <span class="comment">// Instantiate a tuple struct</span>
+    <span class="keyword">let</span> <span class="variable" data-binding-hash="7864684523088382044" style="color: hsl(180,85%,42%);">pair</span> = <span class="type">Pair</span>(<span class="literal">1</span>, <span class="literal">0.1</span>);
+
+    <span class="comment">// Access the fields of a tuple struct</span>
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">"pair contains {:?} and {:?}"</span>, pair.<span class="literal">0</span>, pair.<span class="literal">1</span>);
+
+    <span class="comment">// Destructure a tuple struct</span>
+    <span class="keyword">let</span> <span class="type">Pair</span>(<span class="variable" data-binding-hash="9056485556434668313" style="color: hsl(58,69%,62%);">integer</span>, <span class="variable" data-binding-hash="9056485556434668313" style="color: hsl(58,69%,62%);">decimal</span>) = <span class="variable" data-binding-hash="7864684523088382044" style="color: hsl(180,85%,42%);">pair</span>;
+
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">"pair contains {:?} and {:?}"</span>, integer, decimal);
+}
+</code></pre>

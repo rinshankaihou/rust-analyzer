@@ -111,6 +111,13 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
         let mut binding_hash = None;
         let tag = match node.kind() {
             FN_DEF => {
+                // if let Some(fn_def) = node.as_node().cloned().and_then(ast::FnDef::cast) {
+                //     let ty = fn_def.ret_type().unwrap();
+                //     let node_text_range = fn_def.syntax().text_range();
+                //     println!("FNDEF {} {}",  fn_def.syntax(), node_text_range);
+                //     binding_hash = Some(calc_binding_hash_type(file_id, &ty));
+                    
+                // }
                 bindings_shadow_count.clear();
                 continue;
             }
@@ -122,20 +129,7 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                     continue;
                 }
                 if let Some(name_ref) = node.as_node().cloned().and_then(ast::NameRef::cast) {
-                    let name_kind = classify_name_ref(db, file_id, &name_ref).map(|d| d.kind);
-                    
-                    // let opt_this_node = node.as_node().cloned();
-                    // if let Some(this_node) = opt_this_node{
-                    //     let node_text_range = this_node.text_range();
-                    //     println!("{}", this_node);
-                    //     println!("{}", node_text_range);
-                    //     if let Some(expr) = algo::find_node_at_offset::<ast::Expr>(&root, node_text_range.start()){
-                    //         println!("{}", expr.syntax());
-                    //     }
-                        
-                        
-                    // }
-                    
+                    let name_kind = classify_name_ref(db, file_id, &name_ref).map(|d| d.kind);                   
     
                     match name_kind {
                         Some(Macro(_)) => "macro",
@@ -144,7 +138,7 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             binding_hash = Some(calc_binding_hash_type(file_id, &ptr.ty(db)));
                             let this_node = node.as_node().cloned().unwrap();
                             let node_text_range = this_node.text_range();
-                            println!("FUNCC{} {}", binding_hash.unwrap(), node_text_range);
+                            //println!("FUNCC{} {}", binding_hash.unwrap(), node_text_range);
                             "function"
                         },
                         Some(AssocItem(hir::AssocItem::Const(_))) => "constant",
@@ -154,17 +148,16 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             // try FnData.ret_type
                             let this_node = node.as_node().cloned().unwrap();
                             let node_text_range = this_node.text_range();
-                            println!("MODFUNCC {} {}",  name_ref.syntax(), node_text_range);
+                            //println!("MODFUNCC {} {}",  name_ref.syntax(), node_text_range);
                             let analyzer =
                                 hir::SourceAnalyzer::new(db, file_id, name_ref.syntax(), None);
                             
-                            if let Some(expr) = ast::Expr::cast(name_ref.syntax().parent().unwrap().parent().unwrap().parent().unwrap().parent().unwrap())
+                            if let Some(expr) = ast::Expr::cast(
+                                name_ref.syntax().parent().unwrap().parent().unwrap().parent().unwrap().parent().unwrap())
                             {
-                                println!("MODEXPR{} {}", name_ref.syntax(), expr.syntax());
+                                //println!("MODEXPR {} {}", name_ref.syntax(), expr.syntax());
                                 let type_of_node = analyzer.type_of(db, &expr).unwrap();
                                 binding_hash = Some(calc_binding_hash_type(file_id, &type_of_node));
-                                
-                                
                             }
                             "function"
                         },
@@ -229,7 +222,7 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             
                       
                             if let Some(_expr) = pat.syntax().siblings(Direction::Next).find_map(ast::Expr::cast) {
-                                println!("{} {}",this_node, expr.syntax());
+                                //println!("{} {}",this_node, expr.syntax());
                                 expr = _expr;
                             }
                             
@@ -244,6 +237,7 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                             "variable"
                         }
                     } else {
+
                         name.syntax()
                             .parent()
                             .map(|x| match x.kind() {
@@ -251,7 +245,18 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                                     "type"
                                 }
                                 RECORD_FIELD_DEF => "field",
-                                _ => "function",
+                                _ => {
+                                    //println!("HIONO");
+                                    // I guess this case includes FN_DEF; but what else?
+                                    // if let Some(fn_def) = ast::FnDef::cast(x) {
+                                    //     let ret_type = fn_def.ret_type();
+                                    // }
+                                    // if let Some(_expr) = x.siblings(Direction::Next).find_map(ast::RET_TYPE::cast) {
+                                    // println!("{} {}",this_node, expr.syntax());
+                                    // expr = _expr;
+                                    // }
+                                    "function"
+                                }
                             })
                             .unwrap_or("function")
                     }
@@ -260,7 +265,7 @@ pub(crate) fn highlight(db: &RootDatabase, file_id: FileId) -> Vec<HighlightedRa
                 }
             }
             INT_NUMBER | FLOAT_NUMBER | CHAR | BYTE => {
-                println!("{}", node.to_string());
+                // println!("{}", node.to_string());
                 // if let Some(this_node) = node.as_node().cloned() {
                 //             let node_text_range = this_node.text_range();
                 //             println!("{}", this_node);
@@ -415,7 +420,10 @@ fn foo<T>() -> T {
     unimplemented!();
     foo::<i32>();
 }
-
+if let Some(_expr) = x.siblings(Direction::Next).find_map(ast::RET_TYPE::cast) {
+    // println!("{} {}",this_node, expr.syntax());
+    // expr = _expr;
+    // }
 // comment
 fn main() {
     println!("Hello, {}!", 92);

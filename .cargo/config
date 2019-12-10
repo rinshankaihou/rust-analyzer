@@ -1,15 +1,15 @@
 [alias]
 # Automatically generates the ast and syntax kinds files
-gen-syntax   = "run --package ra_tools --bin ra_tools -- gen-syntax"
+#gen-syntax   = "run --package ra_tools --bin ra_tools -- gen-syntax"
 
 # Extracts the tests from
-gen-tests    = "run --package ra_tools --bin ra_tools -- gen-tests"
+#gen-tests    = "run --package ra_tools --bin ra_tools -- gen-tests"
 
-build-website = "run --package website-gen"
+#build-website = "run --package website-gen"
 
 # Installs the visual studio code extension
-install-ra   = "run --package ra_tools --bin ra_tools -- install-ra"
-install-code = "run --package ra_tools --bin ra_tools -- install-ra" # just an alias
+#install-ra   = "run --package ra_tools --bin ra_tools -- install-ra"
+#install-code = "run --package ra_tools --bin ra_tools -- install-ra" # just an alias
 
 # Formats the full repository or installs the git hook to do it automatically.
 format       = "run --package ra_tools --bin ra_tools -- format"
@@ -28,6 +28,8 @@ parse        = "run --package ra_cli -- parse"
 highlight    = "run --package ra_cli -- highlight"
 rainbow      = "run --package ra_cli -- highlight -r"
 symbols      = "run --package ra_cli -- symbols -h"
+
+xtask = "run --package xtask --bin xtask --"
 # cargo run --package ra_cli -- symbols < ./crates/ra_cli/src/main.rs > color_type_eg/cli_symbols_eg
 # cargo parse  < color_type_eg/snippet.rs > color_type_eg/snippet.parse
 canta        = "run --package ra_cli -- canta"
